@@ -3,187 +3,231 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Assiduidades — Attendance App</title>
-  <meta name="description" content="Attendance tracking with reports and exports. Join the free waitlist." />
+  <title>Assiduidades — Simple attendance for businesses</title>
+  <meta name="description" content="Clock-in/out, reports and exports. Join the free waitlist for the Google Play launch." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="container header">
-    <div class="brand">
-      <div class="logo">A</div>
-      <div>
-        <div class="brandname">Assiduidades</div>
-        <div class="tagline">Simple attendance for businesses</div>
-      </div>
-    </div>
+  <header class="header">
+    <div class="container header-inner">
+      <a class="brand" href="#">
+        <span class="brand-mark">A</span>
+        <span class="brand-text">
+          <span class="brand-name">Assiduidades</span>
+          <span class="brand-sub">Simple attendance</span>
+        </span>
+      </a>
 
-    <nav class="nav">
-      <a href="#features">Features</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#faq">FAQ</a>
-      <a class="pill" href="index.html">PT</a>
-    </nav>
+      <nav class="nav">
+        <a href="#product">Product</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a class="lang" href="index.html">PT</a>
+      </nav>
+    </div>
   </header>
 
   <main>
-    <section class="container hero">
-      <div class="hero-left">
-        <div class="kicker">📲 Coming soon on Google Play</div>
-        <h1>Clock-in, reports and exports — without the mess.</h1>
-        <p class="lead">
-          Track clock-in/out in seconds, see hours per employee and export reports.
-          Join the free waitlist to get notified at launch.
-        </p>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-left">
+          <div class="pill">📲 Coming soon on Google Play</div>
+          <h1>Attendance tracking that’s finally simple.</h1>
+          <p class="lead">
+            Clock-in/out in seconds, hours per employee, period reports and exports.
+            Join the waitlist — it’s free.
+          </p>
 
-        <div class="cta">
-          <a class="btn" href="#waitlist">Join waitlist (Free)</a>
-          <a class="btn secondary" href="#pricing">See pricing</a>
-        </div>
+          <form id="waitlistHeroForm" class="hero-form">
+            <input id="heroEmail" type="email" placeholder="Work email" autocomplete="email" required />
+            <button class="btn" type="submit">Join waitlist</button>
+          </form>
+          <div id="heroMsg" class="form-msg"></div>
 
-        <div class="chips">
-          <span>PT / EN</span>
-          <span>Period reports</span>
-          <span>CSV export</span>
-          <span>Multi-company</span>
-        </div>
-      </div>
-
-      <div class="hero-right">
-        <div class="mock">
-          <div class="mock-top">
-            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-            <span class="mock-title">Preview</span>
-          </div>
-          <div class="mock-body">
-            <div class="mock-card">
-              <div class="mock-h">Today</div>
-              <div class="mock-row"><span>Clock-in</span><b>09:02</b></div>
-              <div class="mock-row"><span>Clock-out</span><b>18:11</b></div>
-              <div class="mock-row"><span>Total</span><b>9h 09m</b></div>
-            </div>
-            <div class="mock-card">
-              <div class="mock-h">Report</div>
-              <div class="mock-row"><span>Period</span><b>01–29</b></div>
-              <div class="mock-row"><span>Employees</span><b>12</b></div>
-              <div class="mock-row"><span>Export</span><b>CSV</b></div>
-            </div>
-            <div class="mock-note">* Mock example</div>
+          <div class="trust">
+            <span>PT / EN</span>
+            <span>Reports</span>
+            <span>CSV export</span>
+            <span>Multi-company</span>
           </div>
         </div>
-      </div>
-    </section>
 
-    <section id="features" class="container section">
-      <h2>Features</h2>
-      <p class="muted">Everything you need to track attendance quickly and clearly.</p>
+        <div class="hero-right">
+          <div class="phone-wrap">
+            <div class="phone">
+              <div class="phone-top">
+                <span class="cam"></span>
+                <span class="spk"></span>
+              </div>
 
-      <div class="grid3">
-        <div class="card">
-          <h3>Fast clock-in/out</h3>
-          <p>Clock in/out in seconds with daily history.</p>
-        </div>
-        <div class="card">
-          <h3>Automatic reports</h3>
-          <p>Hours per employee and period, ready to export.</p>
-        </div>
-        <div class="card">
-          <h3>Company management</h3>
-          <p>Multi-company and roles (owner/manager/employee).</p>
-        </div>
-      </div>
-    </section>
+              <img class="shot" src="assets/app-1.png" alt="App screenshot" onerror="this.style.display='none'; document.getElementById('phFallback').style.display='block';" />
+              <div id="phFallback" class="phone-fallback" style="display:none;">
+                <div class="mini-title">Preview</div>
+                <div class="mini-card">
+                  <div class="mini-row"><span>Clock-in</span><b>09:02</b></div>
+                  <div class="mini-row"><span>Clock-out</span><b>18:11</b></div>
+                  <div class="mini-row"><span>Total</span><b>9h 09m</b></div>
+                </div>
+                <div class="mini-card">
+                  <div class="mini-row"><span>Report</span><b>01–29</b></div>
+                  <div class="mini-row"><span>Export</span><b>CSV</b></div>
+                </div>
+                <div class="mini-note">* placeholder (add screenshots later)</div>
+              </div>
+            </div>
 
-    <section id="pricing" class="container section">
-      <h2>Pricing</h2>
-      <p class="muted">Waitlist is free. Paid plans will be available at launch.</p>
-
-      <div class="pricing">
-        <div class="card">
-          <div class="plan">Free</div>
-          <div class="price">€0</div>
-          <ul>
-            <li>Clock-in/out</li>
-            <li>Up to 5 employees</li>
-            <li>Basic summary</li>
-          </ul>
-          <a class="btn secondary block" href="#waitlist">Join waitlist</a>
-        </div>
-
-        <div class="card highlight">
-          <div class="plan">Pro</div>
-          <div class="price">€9/mo</div>
-          <ul>
-            <li>Period reports</li>
-            <li>CSV export</li>
-            <li>Standard support</li>
-          </ul>
-          <a class="btn block" href="#waitlist">Notify me</a>
-        </div>
-
-        <div class="card">
-          <div class="plan">Business</div>
-          <div class="price">€19/mo</div>
-          <ul>
-            <li>Multi-company</li>
-            <li>Advanced management</li>
-            <li>Priority support</li>
-          </ul>
-          <a class="btn secondary block" href="#waitlist">Notify me</a>
+            <div class="floating f1">Reports</div>
+            <div class="floating f2">Export</div>
+            <div class="floating f3">Hours / month</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="waitlist" class="container section">
-      <h2>Waitlist</h2>
-      <p class="muted">Leave your email and we’ll notify you when it’s live.</p>
+    <section id="product" class="section">
+      <div class="container">
+        <h2>Built for owners and teams — without complexity.</h2>
+        <p class="muted">Everything you need to track hours with clarity.</p>
 
-      <form id="waitlistForm" class="form">
-        <div class="row">
+        <div class="grid3">
+          <div class="card">
+            <h3>Fast clock-in/out</h3>
+            <p>Clock in/out in seconds with daily history.</p>
+          </div>
+          <div class="card">
+            <h3>Period reports</h3>
+            <p>Select dates and generate export-ready reports.</p>
+          </div>
+          <div class="card">
+            <h3>Company management</h3>
+            <p>Multi-company and employee controls.</p>
+          </div>
+        </div>
+
+        <div class="split">
+          <div class="split-left">
+            <h3>How it works</h3>
+            <ol class="steps">
+              <li><b>Clock</b> in/out in the app.</li>
+              <li><b>See</b> hours per employee and day.</li>
+              <li><b>Generate</b> date-range reports and export.</li>
+            </ol>
+
+            <a class="btn secondary" href="#waitlist">Notify me</a>
+          </div>
+
+          <div class="split-right">
+            <div class="shots">
+              <img class="shot2" src="assets/app-2.png" alt="Screenshot 2" onerror="this.style.display='none';" />
+              <img class="shot2" src="assets/app-3.png" alt="Screenshot 3" onerror="this.style.display='none';" />
+              <div class="shots-fallback">
+                <div class="shot-box">Screenshot 2 (optional)</div>
+                <div class="shot-box">Screenshot 3 (optional)</div>
+              </div>
+            </div>
+            <div class="tiny muted">Add screenshots in <b>/assets</b> later.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="section alt">
+      <div class="container">
+        <h2>Pricing</h2>
+        <p class="muted">Waitlist is free. Paid plans will be available at launch.</p>
+
+        <div class="pricing">
+          <div class="price-card">
+            <div class="plan">Free</div>
+            <div class="price">€0</div>
+            <ul>
+              <li>Clock-in/out</li>
+              <li>Up to 5 employees</li>
+              <li>Basic summary</li>
+            </ul>
+            <a class="btn secondary block" href="#waitlist">Join waitlist</a>
+          </div>
+
+          <div class="price-card featured">
+            <div class="badge">Most popular</div>
+            <div class="plan">Pro</div>
+            <div class="price">€9/mo</div>
+            <ul>
+              <li>Period reports</li>
+              <li>CSV export</li>
+              <li>Standard support</li>
+            </ul>
+            <a class="btn block" href="#waitlist">Notify me</a>
+          </div>
+
+          <div class="price-card">
+            <div class="plan">Business</div>
+            <div class="price">€19/mo</div>
+            <ul>
+              <li>Multi-company</li>
+              <li>Advanced management</li>
+              <li>Priority support</li>
+            </ul>
+            <a class="btn secondary block" href="#waitlist">Notify me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="waitlist" class="section">
+      <div class="container">
+        <h2>Waitlist (Free)</h2>
+        <p class="muted">Leave your email and we’ll notify you when it’s live.</p>
+
+        <form id="waitlistForm" class="form">
+          <div class="row">
+            <label>
+              <span>Name (optional)</span>
+              <input id="name" type="text" placeholder="e.g. Alex" autocomplete="name" />
+            </label>
+            <label>
+              <span>Email</span>
+              <input id="email" type="email" placeholder="you@email.com" autocomplete="email" required />
+            </label>
+          </div>
+
           <label>
-            <span>Name (optional)</span>
-            <input id="name" type="text" placeholder="e.g. Alex" autocomplete="name" />
+            <span>Company (optional)</span>
+            <input id="source" type="text" placeholder="e.g. My Company" />
           </label>
-          <label>
-            <span>Email</span>
-            <input id="email" type="email" placeholder="you@email.com" autocomplete="email" required />
-          </label>
-        </div>
 
-        <label>
-          <span>Company (optional)</span>
-          <input id="source" type="text" placeholder="e.g. My Company" />
-        </label>
-
-        <button class="btn" type="submit" id="submitBtn">Join</button>
-        <p id="formMsg" class="form-msg"></p>
-
-        <div class="fineprint">
-          By joining, you agree to receive one email when the app launches.
-        </div>
-      </form>
-    </section>
-
-    <section id="faq" class="container section">
-      <h2>FAQ</h2>
-      <div class="faq">
-        <details class="card" open>
-          <summary>When is the Google Play launch?</summary>
-          <p>Soon. The waitlist is for launch-day notification.</p>
-        </details>
-        <details class="card">
-          <summary>Is joining free?</summary>
-          <p>Yes. Joining the waitlist is 100% free.</p>
-        </details>
-        <details class="card">
-          <summary>Portuguese & English?</summary>
-          <p>Yes — both the site and app support PT/EN.</p>
-        </details>
+          <button class="btn" type="submit" id="submitBtn">Join</button>
+          <p id="formMsg" class="form-msg"></p>
+          <div class="fineprint">By joining, you agree to receive one launch email.</div>
+        </form>
       </div>
     </section>
 
-    <footer class="container footer">
-      <span>© <span id="year"></span> Assiduidades</span>
-      <span class="muted">Built to launch fast.</span>
+    <section id="faq" class="section alt">
+      <div class="container">
+        <h2>FAQ</h2>
+        <div class="faq">
+          <details class="faq-item" open>
+            <summary>When is the Google Play launch?</summary>
+            <p>Soon. The waitlist is for launch-day notification.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Is joining free?</summary>
+            <p>Yes, 100% free.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Portuguese & English?</summary>
+            <p>Yes — PT/EN.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>© <span id="year"></span> Assiduidades</div>
+        <div class="muted">Primary color: #4b39ef</div>
+      </div>
     </footer>
   </main>
 

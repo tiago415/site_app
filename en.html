@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Assiduidades — Attendance App</title>
+  <meta name="description" content="Attendance tracking with reports and exports. Join the free waitlist." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="container header">
+    <div class="brand">
+      <div class="logo">A</div>
+      <div>
+        <div class="brandname">Assiduidades</div>
+        <div class="tagline">Simple attendance for businesses</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a class="pill" href="index.html">PT</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container hero">
+      <div class="hero-left">
+        <div class="kicker">📲 Coming soon on Google Play</div>
+        <h1>Clock-in, reports and exports — without the mess.</h1>
+        <p class="lead">
+          Track clock-in/out in seconds, see hours per employee and export reports.
+          Join the free waitlist to get notified at launch.
+        </p>
+
+        <div class="cta">
+          <a class="btn" href="#waitlist">Join waitlist (Free)</a>
+          <a class="btn secondary" href="#pricing">See pricing</a>
+        </div>
+
+        <div class="chips">
+          <span>PT / EN</span>
+          <span>Period reports</span>
+          <span>CSV export</span>
+          <span>Multi-company</span>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="mock">
+          <div class="mock-top">
+            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            <span class="mock-title">Preview</span>
+          </div>
+          <div class="mock-body">
+            <div class="mock-card">
+              <div class="mock-h">Today</div>
+              <div class="mock-row"><span>Clock-in</span><b>09:02</b></div>
+              <div class="mock-row"><span>Clock-out</span><b>18:11</b></div>
+              <div class="mock-row"><span>Total</span><b>9h 09m</b></div>
+            </div>
+            <div class="mock-card">
+              <div class="mock-h">Report</div>
+              <div class="mock-row"><span>Period</span><b>01–29</b></div>
+              <div class="mock-row"><span>Employees</span><b>12</b></div>
+              <div class="mock-row"><span>Export</span><b>CSV</b></div>
+            </div>
+            <div class="mock-note">* Mock example</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="container section">
+      <h2>Features</h2>
+      <p class="muted">Everything you need to track attendance quickly and clearly.</p>
+
+      <div class="grid3">
+        <div class="card">
+          <h3>Fast clock-in/out</h3>
+          <p>Clock in/out in seconds with daily history.</p>
+        </div>
+        <div class="card">
+          <h3>Automatic reports</h3>
+          <p>Hours per employee and period, ready to export.</p>
+        </div>
+        <div class="card">
+          <h3>Company management</h3>
+          <p>Multi-company and roles (owner/manager/employee).</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="container section">
+      <h2>Pricing</h2>
+      <p class="muted">Waitlist is free. Paid plans will be available at launch.</p>
+
+      <div class="pricing">
+        <div class="card">
+          <div class="plan">Free</div>
+          <div class="price">€0</div>
+          <ul>
+            <li>Clock-in/out</li>
+            <li>Up to 5 employees</li>
+            <li>Basic summary</li>
+          </ul>
+          <a class="btn secondary block" href="#waitlist">Join waitlist</a>
+        </div>
+
+        <div class="card highlight">
+          <div class="plan">Pro</div>
+          <div class="price">€9/mo</div>
+          <ul>
+            <li>Period reports</li>
+            <li>CSV export</li>
+            <li>Standard support</li>
+          </ul>
+          <a class="btn block" href="#waitlist">Notify me</a>
+        </div>
+
+        <div class="card">
+          <div class="plan">Business</div>
+          <div class="price">€19/mo</div>
+          <ul>
+            <li>Multi-company</li>
+            <li>Advanced management</li>
+            <li>Priority support</li>
+          </ul>
+          <a class="btn secondary block" href="#waitlist">Notify me</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="waitlist" class="container section">
+      <h2>Waitlist</h2>
+      <p class="muted">Leave your email and we’ll notify you when it’s live.</p>
+
+      <form id="waitlistForm" class="form">
+        <div class="row">
+          <label>
+            <span>Name (optional)</span>
+            <input id="name" type="text" placeholder="e.g. Alex" autocomplete="name" />
+          </label>
+          <label>
+            <span>Email</span>
+            <input id="email" type="email" placeholder="you@email.com" autocomplete="email" required />
+          </label>
+        </div>
+
+        <label>
+          <span>Company (optional)</span>
+          <input id="source" type="text" placeholder="e.g. My Company" />
+        </label>
+
+        <button class="btn" type="submit" id="submitBtn">Join</button>
+        <p id="formMsg" class="form-msg"></p>
+
+        <div class="fineprint">
+          By joining, you agree to receive one email when the app launches.
+        </div>
+      </form>
+    </section>
+
+    <section id="faq" class="container section">
+      <h2>FAQ</h2>
+      <div class="faq">
+        <details class="card" open>
+          <summary>When is the Google Play launch?</summary>
+          <p>Soon. The waitlist is for launch-day notification.</p>
+        </details>
+        <details class="card">
+          <summary>Is joining free?</summary>
+          <p>Yes. Joining the waitlist is 100% free.</p>
+        </details>
+        <details class="card">
+          <summary>Portuguese & English?</summary>
+          <p>Yes — both the site and app support PT/EN.</p>
+        </details>
+      </div>
+    </section>
+
+    <footer class="container footer">
+      <span>© <span id="year"></span> Assiduidades</span>
+      <span class="muted">Built to launch fast.</span>
+    </footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+  <script>
+    window.__LANG__ = "en";
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

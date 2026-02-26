@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Assiduidades — App de Assiduidade</title>
+  <meta name="description" content="App de assiduidade para registar entradas/saídas e gerar relatórios. Junta-te à lista de espera." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="container header">
+    <div class="brand">
+      <div class="logo">A</div>
+      <div>
+        <div class="brandname">Assiduidades</div>
+        <div class="tagline">Assiduidade simples para empresas</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="#features">Funcionalidades</a>
+      <a href="#pricing">Planos</a>
+      <a href="#faq">FAQ</a>
+      <a class="pill" href="en.html">EN</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container hero">
+      <div class="hero-left">
+        <div class="kicker">📲 Em breve na Play Store</div>
+        <h1>Registo de ponto e relatórios, sem confusão.</h1>
+        <p class="lead">
+          Entrada/saída em segundos, horas por funcionário e exportação de relatórios.
+          Inscreve-te grátis para seres avisado no lançamento.
+        </p>
+
+        <div class="cta">
+          <a class="btn" href="#waitlist">Entrar na lista (Grátis)</a>
+          <a class="btn secondary" href="#pricing">Ver planos</a>
+        </div>
+
+        <div class="chips">
+          <span>PT / EN</span>
+          <span>Relatórios por período</span>
+          <span>Exportação CSV</span>
+          <span>Multi-empresa</span>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="mock">
+          <div class="mock-top">
+            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            <span class="mock-title">Pré-visualização</span>
+          </div>
+          <div class="mock-body">
+            <div class="mock-card">
+              <div class="mock-h">Hoje</div>
+              <div class="mock-row"><span>Entrada</span><b>09:02</b></div>
+              <div class="mock-row"><span>Saída</span><b>18:11</b></div>
+              <div class="mock-row"><span>Total</span><b>9h 09m</b></div>
+            </div>
+            <div class="mock-card">
+              <div class="mock-h">Relatório</div>
+              <div class="mock-row"><span>Período</span><b>01–29</b></div>
+              <div class="mock-row"><span>Funcionários</span><b>12</b></div>
+              <div class="mock-row"><span>Exportar</span><b>CSV</b></div>
+            </div>
+            <div class="mock-note">* Exemplo ilustrativo</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="container section">
+      <h2>Funcionalidades</h2>
+      <p class="muted">O essencial para controlar assiduidade com rapidez e clareza.</p>
+
+      <div class="grid3">
+        <div class="card">
+          <h3>Registo rápido</h3>
+          <p>Entrada/saída em segundos, com histórico por dia.</p>
+        </div>
+        <div class="card">
+          <h3>Relatórios automáticos</h3>
+          <p>Horas por funcionário e por período, pronto a exportar.</p>
+        </div>
+        <div class="card">
+          <h3>Gestão por empresa</h3>
+          <p>Multi-empresa e permissões por perfil (CEO/gestor/funcionário).</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="container section">
+      <h2>Planos</h2>
+      <p class="muted">A lista de espera é gratuita. Os planos pagos ficam disponíveis no lançamento.</p>
+
+      <div class="pricing">
+        <div class="card">
+          <div class="plan">Gratuito</div>
+          <div class="price">0€</div>
+          <ul>
+            <li>Registo de ponto</li>
+            <li>Até 5 funcionários</li>
+            <li>Resumo básico</li>
+          </ul>
+          <a class="btn secondary block" href="#waitlist">Entrar na lista</a>
+        </div>
+
+        <div class="card highlight">
+          <div class="plan">Pro</div>
+          <div class="price">9€/mês</div>
+          <ul>
+            <li>Relatórios por período</li>
+            <li>Exportação CSV</li>
+            <li>Suporte normal</li>
+          </ul>
+          <a class="btn block" href="#waitlist">Quero ser avisado</a>
+        </div>
+
+        <div class="card">
+          <div class="plan">Business</div>
+          <div class="price">19€/mês</div>
+          <ul>
+            <li>Multi-empresa</li>
+            <li>Gestão avançada</li>
+            <li>Prioridade no suporte</li>
+          </ul>
+          <a class="btn secondary block" href="#waitlist">Quero ser avisado</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="waitlist" class="container section">
+      <h2>Lista de espera</h2>
+      <p class="muted">Deixa o teu email e avisamos assim que a app estiver disponível.</p>
+
+      <form id="waitlistForm" class="form">
+        <div class="row">
+          <label>
+            <span>Nome (opcional)</span>
+            <input id="name" type="text" placeholder="Ex: Tiago" autocomplete="name" />
+          </label>
+          <label>
+            <span>Email</span>
+            <input id="email" type="email" placeholder="exemplo@email.com" autocomplete="email" required />
+          </label>
+        </div>
+
+        <label>
+          <span>Empresa (opcional)</span>
+          <input id="source" type="text" placeholder="Ex: Minha Empresa" />
+        </label>
+
+        <button class="btn" type="submit" id="submitBtn">Inscrever</button>
+        <p id="formMsg" class="form-msg"></p>
+
+        <div class="fineprint">
+          Ao inscreveres-te, aceitas receber um email quando a app for lançada.
+        </div>
+      </form>
+    </section>
+
+    <section id="faq" class="container section">
+      <h2>FAQ</h2>
+      <div class="faq">
+        <details class="card" open>
+          <summary>Quando sai na Play Store?</summary>
+          <p>Em breve. A lista de espera serve para receberes a notificação no dia do lançamento.</p>
+        </details>
+        <details class="card">
+          <summary>A inscrição é gratuita?</summary>
+          <p>Sim. A inscrição é 100% gratuita.</p>
+        </details>
+        <details class="card">
+          <summary>Tem Português e Inglês?</summary>
+          <p>Sim. O site e a app têm PT/EN.</p>
+        </details>
+      </div>
+    </section>
+
+    <footer class="container footer">
+      <span>© <span id="year"></span> Assiduidades</span>
+      <span class="muted">Feito para lançar rápido.</span>
+    </footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+  <script>
+    window.__LANG__ = "pt";
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

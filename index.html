@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WorkTrace – Gestão de Presenças Moderna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #08080f;
+      --bg2: #0d0d18;
+      --card: #0f0f1e;
+      --card2: #141428;
+      --border: rgba(75,57,239,0.15);
+      --purple: #4b39ef;
+      --purple-bright: #6b5fff;
+      --purple-glow: rgba(75,57,239,0.35);
+      --purple-soft: rgba(75,57,239,0.12);
+      --white: #f5f4ff;
+      --muted: #7b78a8;
+      --text: #cccbee;
+      --radius: 14px;
+      --font: 'Sora', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 68px;
+      background: rgba(8,8,15,0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 1.15rem; font-weight: 700; color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo .logo-icon {
+      width: 34px; height: 34px; border-radius: 9px;
+      background: var(--purple);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 14px var(--purple-glow);
+    }
+    .nav-logo .logo-icon svg { width: 18px; height: 18px; }
+    .nav-logo .brand-trace {
+      color: var(--purple-bright);
+      text-shadow: 0 0 10px rgba(107,95,255,0.7);
+    }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .btn-ghost {
+      background: none; border: none; cursor: pointer;
+      color: var(--text); font-family: var(--font); font-size: 0.9rem; font-weight: 500;
+      padding: 8px 16px; border-radius: 8px; transition: color .2s;
+    }
+    .btn-ghost:hover { color: var(--white); }
+    .btn-primary {
+      background: var(--purple); color: #fff;
+      border: none; cursor: pointer; font-family: var(--font);
+      font-size: 0.9rem; font-weight: 700;
+      padding: 10px 20px; border-radius: 9px;
+      box-shadow: 0 0 16px var(--purple-glow);
+      transition: background .2s, transform .15s, box-shadow .2s;
+    }
+    .btn-primary:hover {
+      background: var(--purple-bright);
+      box-shadow: 0 0 28px rgba(107,95,255,0.7);
+      transform: translateY(-1px);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 120px 24px 80px;
+      position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 800px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(75,57,239,0.09) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(75,57,239,0.1); border: 1px solid rgba(107,95,255,0.3);
+      border-radius: 100px; padding: 6px 14px;
+      font-size: 0.78rem; font-weight: 600; color: var(--purple-bright);
+      letter-spacing: .04em; text-transform: uppercase; margin-bottom: 32px;
+      text-shadow: 0 0 8px rgba(107,95,255,0.6);
+    }
+    .hero-badge span {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--purple-bright);
+      box-shadow: 0 0 8px rgba(107,95,255,0.9);
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.6)} }
+    #hero h1 {
+      font-size: clamp(2.6rem, 6vw, 4.6rem);
+      font-weight: 800; line-height: 1.08;
+      color: var(--white); max-width: 800px; margin-bottom: 24px;
+    }
+    #hero h1 em {
+      font-style: normal;
+      color: var(--purple-bright);
+      text-shadow: 0 0 18px rgba(107,95,255,0.8), 0 0 40px rgba(75,57,239,0.4);
+    }
+    #hero > p {
+      font-size: 1.1rem; color: var(--muted); max-width: 520px;
+      line-height: 1.7; margin-bottom: 40px;
+    }
+    .hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 64px; }
+    .btn-large { padding: 14px 28px; font-size: 1rem; border-radius: 11px; }
+    .btn-outline {
+      background: none; border: 1px solid rgba(255,255,255,0.12); color: var(--text);
+      cursor: pointer; font-family: var(--font); font-size: 1rem; font-weight: 500;
+      padding: 14px 28px; border-radius: 11px;
+      transition: border-color .2s, color .2s, box-shadow .2s;
+    }
+    .btn-outline:hover {
+      border-color: var(--purple-bright); color: var(--purple-bright);
+      box-shadow: 0 0 14px rgba(107,95,255,0.3);
+    }
+    .hero-note { font-size: 0.82rem; color: var(--muted); }
+
+    /* ── SECÇÕES ── */
+    section { padding: 100px 48px; }
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; margin-bottom: 14px;
+      color: var(--purple-bright);
+      text-shadow: 0 0 10px rgba(107,95,255,0.7);
+    }
+    .section-title {
+      font-size: clamp(1.9rem, 4vw, 3rem); font-weight: 800;
+      color: var(--white); margin-bottom: 16px;
+    }
+    .section-sub { font-size: 1rem; color: var(--muted); max-width: 520px; line-height: 1.7; }
+    .center { text-align: center; }
+    .center .section-sub { margin: 0 auto; }
+
+    /* ── FUNCIONALIDADES ── */
+    #funcionalidades { background: var(--bg2); }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px; margin-top: 60px;
+    }
+    .feature-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+    }
+    .feature-card:hover {
+      border-color: rgba(107,95,255,0.45);
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(75,57,239,0.15);
+    }
+    .feature-icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      background: var(--purple-soft); border: 1px solid rgba(107,95,255,0.25);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
+      box-shadow: 0 0 10px rgba(75,57,239,0.2);
+    }
+    .feature-icon svg { width: 22px; height: 22px; stroke: var(--purple-bright); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+    .feature-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── COMO FUNCIONA ── */
+    #como { background: var(--bg); }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 24px; margin-top: 60px; position: relative;
+    }
+    .steps-grid::before {
+      content: ''; position: absolute; top: 44px;
+      left: calc(12.5% + 10px); right: calc(12.5% + 10px);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--purple-bright), transparent);
+      opacity: .3;
+    }
+    .step { text-align: center; position: relative; }
+    .step-num {
+      position: absolute; top: -8px; right: calc(50% - 30px);
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--purple); color: #fff;
+      font-size: 0.65rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 10px var(--purple-glow);
+    }
+    .step-icon {
+      width: 80px; height: 80px; border-radius: 18px;
+      background: var(--card2); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px; position: relative;
+      transition: box-shadow .25s;
+    }
+    .step:hover .step-icon { box-shadow: 0 0 20px rgba(75,57,239,0.3); }
+    .step-icon svg { width: 34px; height: 34px; stroke: var(--purple-bright); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .step h3 { font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+    .step p { font-size: 0.84rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── ESTATÍSTICAS ── */
+    #estatisticas { background: var(--bg2); }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; margin-top: 60px;
+      border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+    }
+    .stat-item { background: var(--card); padding: 40px 24px; text-align: center; }
+    .stat-value {
+      font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 800;
+      color: var(--purple-bright); line-height: 1; margin-bottom: 10px;
+      text-shadow: 0 0 14px rgba(107,95,255,0.7), 0 0 30px rgba(75,57,239,0.3);
+    }
+    .stat-value sup { font-size: 1rem; }
+    .stat-value sub { font-size: 1.1rem; font-weight: 600; }
+    .stat-label { font-size: 0.85rem; color: var(--muted); }
+
+    /* ── TESTEMUNHOS ── */
+    #testemunhos { background: var(--bg); }
+    .testi-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px; margin-top: 60px;
+    }
+    .testi-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px;
+      transition: border-color .25s, box-shadow .25s;
+    }
+    .testi-card:hover {
+      border-color: rgba(107,95,255,0.35);
+      box-shadow: 0 0 18px rgba(75,57,239,0.12);
+    }
+    .stars {
+      font-size: 1rem; margin-bottom: 14px; letter-spacing: 2px;
+      color: var(--purple-bright);
+      text-shadow: 0 0 8px rgba(107,95,255,0.8);
+    }
+    .testi-card blockquote {
+      font-size: 0.9rem; color: var(--text); line-height: 1.7;
+      margin-bottom: 20px; font-style: normal;
+    }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--purple); color: #fff;
+      font-size: 0.78rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      box-shadow: 0 0 10px var(--purple-glow);
+    }
+    .author-name { font-size: 0.88rem; font-weight: 700; color: var(--white); }
+    .author-role { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+    /* ── PREÇOS ── */
+    #precos { background: var(--bg2); }
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px; margin-top: 60px; align-items: start;
+    }
+    .plan {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 32px; position: relative;
+    }
+    .plan.featured {
+      background: var(--card2);
+      border-color: var(--purple);
+      box-shadow: 0 0 40px rgba(75,57,239,0.2), 0 0 80px rgba(75,57,239,0.08);
+    }
+    .popular-badge {
+      position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+      background: var(--purple); color: #fff;
+      font-size: 0.72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+      padding: 4px 14px; border-radius: 100px;
+      box-shadow: 0 0 14px var(--purple-glow);
+    }
+    .plan-tier { font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .06em; }
+    .plan-price { font-size: 2.8rem; font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 4px; }
+    .plan-price span { font-size: 1rem; color: var(--muted); font-weight: 400; }
+    .plan-desc { font-size: 0.84rem; color: var(--muted); margin-bottom: 24px; margin-top: 6px; }
+    .plan-features { list-style: none; margin-bottom: 28px; }
+    .plan-features li {
+      font-size: 0.88rem; color: var(--text); padding: 7px 0;
+      display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .plan-features li:last-child { border-bottom: none; }
+    .plan-features li::before {
+      content: ''; width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0;
+      background: var(--purple-soft); border: 1px solid var(--purple-bright);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 8l3 3 5-5' stroke='%236b5fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+    .btn-plan {
+      width: 100%; padding: 13px; border-radius: 10px;
+      font-family: var(--font); font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; transition: all .2s;
+    }
+    .btn-plan-outline {
+      background: none; border: 1px solid rgba(255,255,255,0.14); color: var(--white);
+    }
+    .btn-plan-outline:hover { border-color: var(--purple-bright); color: var(--purple-bright); box-shadow: 0 0 12px rgba(107,95,255,0.3); }
+    .btn-plan-fill { background: var(--purple); border: none; color: #fff; box-shadow: 0 0 18px var(--purple-glow); }
+    .btn-plan-fill:hover { background: var(--purple-bright); box-shadow: 0 0 28px rgba(107,95,255,0.6); }
+
+    /* ── CTA ── */
+    #cta { background: var(--bg); }
+    .cta-box {
+      background: linear-gradient(135deg, var(--card2) 0%, rgba(75,57,239,0.07) 100%);
+      border: 1px solid rgba(107,95,255,0.25);
+      border-radius: 22px; padding: 72px 40px; text-align: center;
+      max-width: 780px; margin: 0 auto; position: relative; overflow: hidden;
+      box-shadow: 0 0 60px rgba(75,57,239,0.1);
+    }
+    .cta-box::before {
+      content: ''; position: absolute; bottom: -80px; right: -80px;
+      width: 280px; height: 280px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(75,57,239,0.12) 0%, transparent 70%);
+    }
+    .cta-box h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; color: var(--white); margin-bottom: 16px; }
+    .cta-box p { font-size: 1rem; color: var(--muted); margin-bottom: 36px; line-height: 1.7; }
+    .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── RODAPÉ ── */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 64px 48px 40px;
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+      gap: 40px; margin-bottom: 48px;
+    }
+    .footer-brand p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-top: 14px; max-width: 220px; }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 700; color: var(--white); margin-bottom: 16px; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { font-size: 0.84rem; color: var(--muted); text-decoration: none; transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--purple-bright); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid var(--border); padding-top: 24px; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom p { font-size: 0.82rem; color: var(--muted); }
+
+    /* ── RESPONSIVO ── */
+    @media (max-width: 1024px) {
+      .steps-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid::before { display: none; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      section { padding: 72px 20px; }
+      .testi-grid, .pricing-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      footer { padding: 48px 20px 32px; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>
+      </svg>
+    </div>
+    <span>Work<span class="brand-trace">Trace</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#funcionalidades">Funcionalidades</a></li>
+    <li><a href="#como">Como Funciona</a></li>
+    <li><a href="#estatisticas">Estatísticas</a></li>
+    <li><a href="#precos">Preços</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="contacto.html" class="btn-ghost" style="text-decoration:none;">Falar com Vendas</a>
+    <a href="registo.html" class="btn-primary" style="text-decoration:none;">Começar Grátis</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-badge"><span></span> Agora com agendamento por IA</div>
+  <h1>Registo de presenças que a tua equipa vai <em>realmente</em> usar</h1>
+  <p>Sem configurações complexas. Sem hardware necessário. O WorkTrace ajuda as equipas a registar entradas, controlar presenças e gerar relatórios prontos para o processamento salarial.</p>
+  <div class="hero-cta">
+    <a href="registo.html" class="btn-primary btn-large" style="text-decoration:none;">Começar Grátis →</a>
+    <a href="#como" class="btn-outline" style="text-decoration:none;">Ver como funciona</a>
+  </div>
+  <p class="hero-note">Sem cartão de crédito · Grátis até 10 colaboradores · Configuração em 3 minutos</p>
+</section>
+
+<!-- FUNCIONALIDADES -->
+<section id="funcionalidades">
+  <div class="center">
+    <div class="section-label">Funcionalidades</div>
+    <h2 class="section-title">Tudo o que a tua equipa precisa</h2>
+    <p class="section-sub">Ferramentas poderosas que mantêm a tua equipa responsável — sem complexidade.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h3>Gestão de Equipas</h3>
+      <p>Convida colaboradores ilimitados, atribui funções e organiza por departamento ou localização sem esforço.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </div>
+      <h3>Horários Flexíveis</h3>
+      <p>Configura turnos, horas de trabalho e políticas de pausa. O WorkTrace adapta-se à estrutura da tua organização.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <h3>Check-in por Geolocalização</h3>
+      <p>Garante que os colaboradores só registam entrada quando estão fisicamente no local correto. Sem fraudes.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+      </div>
+      <h3>Dashboards em Tempo Real</h3>
+      <p>Vê quem está presente, quem chegou atrasado e quem está ausente — em tempo real, em qualquer dispositivo.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <h3>Relatórios para Salários</h3>
+      <p>Exporta relatórios detalhados em PDF e CSV automaticamente formatados para o teu processador de salários.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <h3>Alertas Inteligentes</h3>
+      <p>Recebe notificações de faltas, atrasos e horas extra no momento em que acontecem.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como">
+  <div class="center">
+    <div class="section-label">Como Funciona</div>
+    <h2 class="section-title">Pronto a funcionar em minutos</h2>
+    <p class="section-sub">Sem configuração complexa. Sem formação necessária. A tua equipa começa a registar presenças no primeiro dia.</p>
+  </div>
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-icon">
+        <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+      </div>
+      <h3>Cria o teu espaço de trabalho</h3>
+      <p>Regista-te e convida a tua equipa em minutos. Importa via CSV ou liga à tua ferramenta de RH.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 1 21 12a10 10 0 0 1-2.93 7.07M4.93 4.93A10 10 0 0 0 3 12a10 10 0 0 0 1.93 7.07"/></svg>
+      </div>
+      <h3>Configura os horários</h3>
+      <p>Define turnos, horas de trabalho e políticas. O WorkTrace adapta-se à estrutura da tua organização.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      </div>
+      <h3>Colaboradores registam entrada</h3>
+      <p>O pessoal faz check-in via browser, app móvel ou QR code na entrada. Sem hardware necessário.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-icon">
+        <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+      </div>
+      <h3>Acompanha e analisa</h3>
+      <p>Vê dashboards em tempo real, recebe alertas automáticos e exporta relatórios prontos para salários.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ESTATÍSTICAS -->
+<section id="estatisticas">
+  <div class="center">
+    <div class="section-label">Em Números</div>
+    <h2 class="section-title">Confiado por equipas em todo o mundo</h2>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-value">12 000<sup>+</sup></div>
+      <div class="stat-label">Utilizadores ativos em todo o mundo</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">98<sub>%</sub></div>
+      <div class="stat-label">Precisão média de presenças</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">4.9<sub>/5</sub></div>
+      <div class="stat-label">Classificação na App Store</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">3<sub>min</sub></div>
+      <div class="stat-label">Tempo médio de configuração</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTEMUNHOS -->
+<section id="testemunhos">
+  <div class="center">
+    <div class="section-label">Testemunhos</div>
+    <h2 class="section-title">Adorado por equipas de RH em todo o lado</h2>
+    <p class="section-sub">De startups a grandes empresas, o WorkTrace ganha confiança todos os dias.</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <blockquote>"O WorkTrace reduziu o nosso relatório mensal de presenças de um dia inteiro de trabalho para 15 minutos. Os relatórios automáticos são incríveis."</blockquote>
+      <div class="testi-author">
+        <div class="avatar">SM</div>
+        <div>
+          <div class="author-name">Sofia Mendes</div>
+          <div class="author-role">Gestora de RH na TechHub Lda.</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Como pequena agência criativa, precisávamos de algo simples mas profissional. O WorkTrace cumpre tudo e o plano gratuito foi perfeito para começar."</blockquote>
+      <div class="testi-author">
+        <div class="avatar">AC</div>
+        <div>
+          <div class="author-name">Ana Costa</div>
+          <div class="author-role">Fundadora da Bloom Studio</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Os nossos colaboradores adoram usar. O check-in móvel é tão rápido que nem pensam nisso — simplesmente funciona."</blockquote>
+      <div class="testi-author">
+        <div class="avatar">IR</div>
+        <div>
+          <div class="author-name">Inês Rodrigues</div>
+          <div class="author-role">Office Manager na Novatech</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Gerimos mais de 200 colaboradores de campo em 3 cidades. A geolocalização do WorkTrace garante que sabemos sempre quem está onde."</blockquote>
+      <div class="testi-author">
+        <div class="avatar">CF</div>
+        <div>
+          <div class="author-name">Carlos Ferreira</div>
+          <div class="author-role">Diretor de Operações na LogiGroup</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <blockquote>"A integração com o nosso sistema de salários foi perfeita. A equipa do WorkTrace foi incrivelmente prestável durante a configuração."</blockquote>
+      <div class="testi-author">
+        <div class="avatar">MS</div>
+        <div>
+          <div class="author-name">Miguel Santos</div>
+          <div class="author-role">CTO na DataFlow</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Experimentámos outras três ferramentas antes do WorkTrace. Nenhuma se aproxima em termos de fiabilidade e facilidade de uso."</blockquote>
+      <div class="testi-author">
+        <div class="avatar">JO</div>
+        <div>
+          <div class="author-name">João Oliveira</div>
+          <div class="author-role">CEO na BuildPro</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREÇOS -->
+<section id="precos">
+  <div class="center">
+    <div class="section-label">Preços</div>
+    <h2 class="section-title">Preços simples e transparentes</h2>
+    <p class="section-sub">Sem taxas escondidas. Começa grátis, faz upgrade quando precisares.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="plan">
+      <div class="plan-tier">Inicial</div>
+      <div class="plan-price">Grátis</div>
+      <div class="plan-desc">Perfeito para pequenas equipas que estão a começar.</div>
+      <ul class="plan-features">
+        <li>Até 10 colaboradores</li>
+        <li>Registo básico de presenças</li>
+        <li>Check-in / check-out manual</li>
+        <li>Emails de resumo semanal</li>
+        <li>Exportação CSV</li>
+      </ul>
+      <a href="registo.html?plano=inicial" class="btn-plan btn-plan-outline" style="text-decoration:none;display:block;text-align:center;">Começar grátis</a>
+    </div>
+    <div class="plan featured">
+      <div class="popular-badge">⚡ Mais Popular</div>
+      <div class="plan-tier">Profissional</div>
+      <div class="plan-price">€12 <span>/utilizador/mês</span></div>
+      <div class="plan-desc">Para equipas em crescimento que precisam de ferramentas avançadas.</div>
+      <ul class="plan-features">
+        <li>Colaboradores ilimitados</li>
+        <li>Dashboards em tempo real</li>
+        <li>Check-in por geolocalização</li>
+        <li>Alertas e notificações inteligentes</li>
+        <li>Relatórios PDF prontos para salários</li>
+        <li>Acesso à API</li>
+        <li>Suporte prioritário</li>
+      </ul>
+      <a href="registo.html?plano=profissional" class="btn-plan btn-plan-fill" style="text-decoration:none;display:block;text-align:center;">Iniciar período de teste de 14 dias</a>
+    </div>
+    <div class="plan">
+      <div class="plan-tier">Empresarial</div>
+      <div class="plan-price">Personalizado</div>
+      <div class="plan-desc">Soluções à medida para grandes organizações.</div>
+      <ul class="plan-features">
+        <li>Tudo do plano Profissional</li>
+        <li>Integração SSO / SAML</li>
+        <li>Relatórios personalizados</li>
+        <li>Gestor de conta dedicado</li>
+        <li>Garantia SLA</li>
+        <li>Opção de instalação local</li>
+      </ul>
+      <a href="contacto.html" class="btn-plan btn-plan-outline" style="text-decoration:none;display:block;text-align:center;">Falar com vendas</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-box">
+    <div class="section-label center">Começa Hoje</div>
+    <h2>Pronto para ter controlo<br>sobre as presenças?</h2>
+    <p>Junta-te a milhares de equipas que já usam o WorkTrace.<br>Inicia o teu período de teste gratuito de 14 dias — sem cartão de crédito.</p>
+    <div class="cta-buttons">
+      <a href="registo.html" class="btn-primary btn-large" style="text-decoration:none;">Escolher um Plano →</a>
+      <a href="contacto.html" class="btn-outline" style="text-decoration:none;">Falar com Vendas</a>
+    </div>
+  </div>
+</section>
+
+<!-- RODAPÉ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo" style="text-decoration:none;">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>
+          </svg>
+        </div>
+        <span>Work<span class="brand-trace">Trace</span></span>
+      </a>
+      <p>Gestão moderna de presenças para equipas que se movem rápido.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Produto</h4>
+      <ul>
+        <li><a href="#funcionalidades">Funcionalidades</a></li>
+        <li><a href="#precos">Preços</a></li>
+        <li><a href="#">Novidades</a></li>
+        <li><a href="#">Roadmap</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href="#">Sobre nós</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Carreiras</a></li>
+        <li><a href="#">Imprensa</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Política de Privacidade</a></li>
+        <li><a href="#">Termos de Serviço</a></li>
+        <li><a href="#">Política de Cookies</a></li>
+        <li><a href="#">RGPD</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Suporte</h4>
+      <ul>
+        <li><a href="#">Documentação</a></li>
+        <li><a href="#">Centro de Ajuda</a></li>
+        <li><a href="#">Referência API</a></li>
+        <li><a href="#">Estado do Serviço</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 WorkTrace. Todos os direitos reservados.</p>
+    <p>Feito com cuidado para locais de trabalho modernos.</p>
+  </div>
+</footer>
+
+</body>
+</html>

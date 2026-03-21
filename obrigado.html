@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WorkTrace – Obrigado!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #08080f; --bg2: #0d0d18; --card: #0f0f1e; --card2: #141428;
+      --border: rgba(75,57,239,0.15); --purple: #4b39ef; --purple-bright: #6b5fff;
+      --purple-glow: rgba(75,57,239,0.35); --purple-soft: rgba(75,57,239,0.12);
+      --white: #f5f4ff; --muted: #7b78a8; --text: #cccbee;
+      --radius: 14px; --font: 'Sora', sans-serif;
+    }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: var(--font); -webkit-font-smoothing: antialiased;
+      min-height: 100vh; display: flex; flex-direction: column;
+    }
+
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 68px;
+      background: rgba(8,8,15,0.95); border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 1.1rem; font-weight: 700; color: var(--white); text-decoration: none;
+    }
+    .logo-icon {
+      width: 32px; height: 32px; border-radius: 8px; background: var(--purple);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 14px var(--purple-glow);
+    }
+    .logo-icon svg { width: 16px; height: 16px; }
+    .brand-trace { color: var(--purple-bright); text-shadow: 0 0 10px rgba(107,95,255,0.7); }
+
+    main {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 60px 24px; position: relative; overflow: hidden; text-align: center;
+    }
+    main::before {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(75,57,239,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .content { position: relative; max-width: 520px; }
+
+    /* Círculo animado */
+    .check-circle {
+      width: 100px; height: 100px; border-radius: 50%;
+      background: var(--purple-soft); border: 2px solid rgba(107,95,255,0.4);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 32px;
+      box-shadow: 0 0 40px rgba(75,57,239,0.3), 0 0 80px rgba(75,57,239,0.1);
+      animation: pop .5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    }
+    @keyframes pop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .check-circle svg {
+      width: 46px; height: 46px; stroke: var(--purple-bright); fill: none;
+      stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+      filter: drop-shadow(0 0 8px rgba(107,95,255,0.8));
+    }
+
+    h1 {
+      font-size: 2.4rem; font-weight: 800; color: var(--white);
+      margin-bottom: 16px; line-height: 1.1;
+    }
+    h1 em {
+      font-style: normal; color: var(--purple-bright);
+      text-shadow: 0 0 16px rgba(107,95,255,0.7);
+    }
+    p {
+      font-size: 1rem; color: var(--muted); line-height: 1.7; margin-bottom: 40px;
+    }
+
+    .steps-mini {
+      display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 40px;
+    }
+    .step-mini {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px 20px; text-align: center; min-width: 130px;
+    }
+    .step-mini .num {
+      font-size: 1.4rem; font-weight: 800; color: var(--purple-bright);
+      text-shadow: 0 0 10px rgba(107,95,255,0.6); margin-bottom: 4px;
+    }
+    .step-mini .desc { font-size: 0.78rem; color: var(--muted); line-height: 1.4; }
+
+    .btn-home {
+      display: inline-block; padding: 14px 32px; border-radius: 11px;
+      background: var(--purple); color: #fff; text-decoration: none;
+      font-family: var(--font); font-size: 1rem; font-weight: 700;
+      box-shadow: 0 0 20px var(--purple-glow);
+      transition: background .2s, box-shadow .2s, transform .15s;
+    }
+    .btn-home:hover {
+      background: var(--purple-bright);
+      box-shadow: 0 0 32px rgba(107,95,255,0.6);
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      display: inline-block; padding: 14px 28px; border-radius: 11px;
+      border: 1px solid rgba(255,255,255,0.12); color: var(--text);
+      text-decoration: none; font-family: var(--font); font-size: 1rem; font-weight: 500;
+      margin-left: 12px;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-secondary:hover { border-color: var(--purple-bright); color: var(--purple-bright); }
+
+    @media (max-width: 480px) {
+      nav { padding: 0 20px; }
+      h1 { font-size: 1.8rem; }
+      .btn-secondary { margin-left: 0; margin-top: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>
+      </svg>
+    </div>
+    <span>Work<span class="brand-trace">Trace</span></span>
+  </a>
+</nav>
+
+<main>
+  <div class="content">
+
+    <div class="check-circle">
+      <svg viewBox="0 0 24 24">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+
+    <h1>Estás na lista! <em>🎉</em></h1>
+    <p>Recebemos o teu registo e entraremos em contacto em breve. Sê dos primeiros a descobrir o WorkTrace quando lançarmos.</p>
+
+    <div class="steps-mini">
+      <div class="step-mini">
+        <div class="num">1</div>
+        <div class="desc">Registo confirmado</div>
+      </div>
+      <div class="step-mini">
+        <div class="num">2</div>
+        <div class="desc">Email de confirmação</div>
+      </div>
+      <div class="step-mini">
+        <div class="num">3</div>
+        <div class="desc">Acesso antecipado</div>
+      </div>
+    </div>
+
+    <a href="index.html" class="btn-home">Voltar ao início</a>
+    <a href="contacto.html" class="btn-secondary">Falar com vendas</a>
+
+  </div>
+</main>
+
+</body>
+</html>

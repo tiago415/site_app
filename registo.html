@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WorkTrace – Registo / Waitlist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #08080f; --bg2: #0d0d18; --card: #0f0f1e; --card2: #141428;
+      --border: rgba(75,57,239,0.15); --purple: #4b39ef; --purple-bright: #6b5fff;
+      --purple-glow: rgba(75,57,239,0.35); --purple-soft: rgba(75,57,239,0.12);
+      --white: #f5f4ff; --muted: #7b78a8; --text: #cccbee;
+      --radius: 14px; --font: 'Sora', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: var(--font); -webkit-font-smoothing: antialiased;
+      min-height: 100vh; display: flex; flex-direction: column;
+    }
+
+    /* NAV */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 68px;
+      background: rgba(8,8,15,0.95); border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 1.1rem; font-weight: 700; color: var(--white); text-decoration: none;
+    }
+    .logo-icon {
+      width: 32px; height: 32px; border-radius: 8px; background: var(--purple);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 14px var(--purple-glow);
+    }
+    .logo-icon svg { width: 16px; height: 16px; }
+    .brand-trace { color: var(--purple-bright); text-shadow: 0 0 10px rgba(107,95,255,0.7); }
+    .nav-back {
+      color: var(--muted); text-decoration: none; font-size: 0.88rem; font-weight: 500;
+      display: flex; align-items: center; gap: 6px; transition: color .2s;
+    }
+    .nav-back:hover { color: var(--white); }
+
+    /* MAIN */
+    main {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 60px 24px; position: relative; overflow: hidden;
+    }
+    main::before {
+      content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(75,57,239,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 48px 44px; width: 100%; max-width: 480px;
+      box-shadow: 0 0 60px rgba(75,57,239,0.08);
+      position: relative;
+    }
+
+    .plan-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--purple-soft); border: 1px solid rgba(107,95,255,0.3);
+      border-radius: 100px; padding: 5px 12px;
+      font-size: 0.75rem; font-weight: 700; color: var(--purple-bright);
+      text-transform: uppercase; letter-spacing: .06em;
+      text-shadow: 0 0 8px rgba(107,95,255,0.5);
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 1.8rem; font-weight: 800; color: var(--white);
+      line-height: 1.2; margin-bottom: 8px;
+    }
+    .subtitle { font-size: 0.92rem; color: var(--muted); margin-bottom: 32px; line-height: 1.6; }
+
+    .form-group { margin-bottom: 18px; }
+    label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--text); margin-bottom: 7px; }
+    input, select {
+      width: 100%; background: var(--card2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 14px;
+      color: var(--white); font-family: var(--font); font-size: 0.9rem;
+      transition: border-color .2s, box-shadow .2s; outline: none;
+    }
+    input::placeholder { color: var(--muted); }
+    input:focus, select:focus {
+      border-color: var(--purple-bright);
+      box-shadow: 0 0 0 3px rgba(107,95,255,0.15);
+    }
+    select option { background: var(--card2); }
+
+    .btn-submit {
+      width: 100%; padding: 14px; border-radius: 11px;
+      background: var(--purple); color: #fff; border: none;
+      font-family: var(--font); font-size: 1rem; font-weight: 700;
+      cursor: pointer; margin-top: 8px;
+      box-shadow: 0 0 20px var(--purple-glow);
+      transition: background .2s, box-shadow .2s, transform .15s;
+    }
+    .btn-submit:hover {
+      background: var(--purple-bright);
+      box-shadow: 0 0 32px rgba(107,95,255,0.6);
+      transform: translateY(-1px);
+    }
+
+    .terms {
+      font-size: 0.78rem; color: var(--muted); text-align: center;
+      margin-top: 16px; line-height: 1.6;
+    }
+    .terms a { color: var(--purple-bright); text-decoration: none; }
+    .terms a:hover { text-decoration: underline; }
+
+    .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+    .login-link {
+      text-align: center; font-size: 0.85rem; color: var(--muted);
+    }
+    .login-link a { color: var(--purple-bright); text-decoration: none; font-weight: 600; }
+    .login-link a:hover { text-decoration: underline; }
+
+    @media (max-width: 520px) {
+      nav { padding: 0 20px; }
+      .card { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>
+      </svg>
+    </div>
+    <span>Work<span class="brand-trace">Trace</span></span>
+  </a>
+  <a href="index.html" class="nav-back">← Voltar ao início</a>
+</nav>
+
+<main>
+  <div class="card">
+    <div class="plan-badge" id="planBadge">⚡ Waitlist</div>
+    <h1>Entra na lista de espera</h1>
+    <p class="subtitle">Regista-te agora e sê dos primeiros a ter acesso ao WorkTrace quando lançarmos.</p>
+
+    <form id="waitlistForm" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label for="nome">Nome completo</label>
+        <input type="text" id="nome" name="nome" placeholder="O teu nome" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="o.teu@email.com" required />
+      </div>
+      <div class="form-group">
+        <label for="empresa">Empresa (opcional)</label>
+        <input type="text" id="empresa" name="empresa" placeholder="Nome da empresa" />
+      </div>
+      <div class="form-group">
+        <label for="plano">Plano de interesse</label>
+        <select id="plano" name="plano">
+          <option value="inicial">Inicial – Grátis</option>
+          <option value="profissional">Profissional – €12/utilizador/mês</option>
+          <option value="empresarial">Empresarial – Personalizado</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-submit">Entrar na Waitlist →</button>
+    </form>
+
+    <p class="terms">
+      Ao registares-te, aceitas os nossos
+      <a href="#">Termos de Serviço</a> e <a href="#">Política de Privacidade</a>.
+    </p>
+
+    <div class="divider"></div>
+
+    <p class="login-link">
+      Já tens conta? <a href="#">Entrar aqui</a>
+    </p>
+  </div>
+</main>
+
+<script>
+  // Lê o plano da URL e pré-seleciona no select
+  const params = new URLSearchParams(window.location.search);
+  const plano = params.get('plano');
+  if (plano) {
+    const select = document.getElementById('plano');
+    const badge = document.getElementById('planBadge');
+    const labels = { inicial: 'Plano Inicial', profissional: 'Plano Profissional', empresarial: 'Plano Empresarial' };
+    if (select) select.value = plano;
+    if (badge && labels[plano]) badge.textContent = '⚡ ' + labels[plano];
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    // Aqui vais ligar à tua base de dados / API
+    // Ex: fetch('/api/waitlist', { method: 'POST', body: new FormData(e.target) })
+    window.location.href = 'obrigado.html';
+  }
+</script>
+</body>
+</html>

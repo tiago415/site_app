@@ -223,7 +223,7 @@
     /* ── ESTATÍSTICAS ── */
     #estatisticas { background: var(--bg2); }
     .stats-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr);
+      display: grid; grid-template-columns: repeat(3, 1fr);
       gap: 1px; margin-top: 60px;
       border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
     }
@@ -240,8 +240,8 @@
     /* ── TESTEMUNHOS ── */
     #testemunhos { background: var(--bg); }
     .testi-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 20px; margin-top: 60px;
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 20px; margin-top: 60px; max-width: 860px; margin-left: auto; margin-right: auto;
     }
     .testi-card {
       background: var(--card); border: 1px solid var(--border);
@@ -251,11 +251,6 @@
     .testi-card:hover {
       border-color: rgba(107,95,255,0.35);
       box-shadow: 0 0 18px rgba(75,57,239,0.12);
-    }
-    .stars {
-      font-size: 1rem; margin-bottom: 14px; letter-spacing: 2px;
-      color: var(--purple-bright);
-      text-shadow: 0 0 8px rgba(107,95,255,0.8);
     }
     .testi-card blockquote {
       font-size: 0.9rem; color: var(--text); line-height: 1.7;
@@ -366,7 +361,7 @@
     @media (max-width: 1024px) {
       .steps-grid { grid-template-columns: repeat(2, 1fr); }
       .steps-grid::before { display: none; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
       .footer-top { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 768px) {
@@ -414,7 +409,7 @@
     <a href="registo.html" class="btn-primary btn-large" style="text-decoration:none;">Começar Grátis →</a>
     <a href="#como" class="btn-outline" style="text-decoration:none;">Ver como funciona</a>
   </div>
-  <p class="hero-note">Sem cartão de crédito · Grátis até 10 colaboradores · Configuração em 3 minutos</p>
+  <p class="hero-note">Sem cartão de crédito · Grátis até 5 colaboradores · Configuração em 3 minutos</p>
 </section>
 
 <!-- FUNCIONALIDADES -->
@@ -453,7 +448,6 @@
 
     <div class="feature-card">
       <div class="feature-icon">
-        <!-- QR CODE ICON (mesmo estilo dos outros) -->
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="3" width="6" height="6"/>
           <rect x="15" y="3" width="6" height="6"/>
@@ -554,16 +548,12 @@
   </div>
   <div class="stats-grid">
     <div class="stat-item">
-      <div class="stat-value">12 000<sup>+</sup></div>
-      <div class="stat-label">Utilizadores ativos em todo o mundo</div>
-    </div>
-    <div class="stat-item">
       <div class="stat-value">98<sub>%</sub></div>
       <div class="stat-label">Precisão média de presenças</div>
     </div>
     <div class="stat-item">
       <div class="stat-value">4.9<sub>/5</sub></div>
-      <div class="stat-label">Classificação de Utilizadores </div>
+      <div class="stat-label">Classificação de Utilizadores</div>
     </div>
     <div class="stat-item">
       <div class="stat-value">3<sub>min</sub></div>
@@ -581,7 +571,6 @@
   </div>
   <div class="testi-grid">
     <div class="testi-card">
-      <div class="stars">★★★★★</div>
       <blockquote>"O WorkTrace reduziu o nosso relatório mensal de presenças de um dia inteiro de trabalho para 15 minutos. Os relatórios automáticos são incríveis."</blockquote>
       <div class="testi-author">
         <div class="avatar">SM</div>
@@ -591,52 +580,11 @@
       </div>
     </div>
     <div class="testi-card">
-      <div class="stars">★★★★★</div>
       <blockquote>"Como pequena agência criativa, precisávamos de algo simples mas profissional. O WorkTrace cumpre tudo e o plano gratuito foi perfeito para começar."</blockquote>
       <div class="testi-author">
         <div class="avatar">AC</div>
         <div>
           <div class="author-name">Ana Costa</div>
-        </div>
-      </div>
-    </div>
-    <div class="testi-card">
-      <div class="stars">★★★★★</div>
-      <blockquote>"Os nossos colaboradores adoram usar. O check-in móvel é tão rápido que nem pensam nisso — simplesmente funciona."</blockquote>
-      <div class="testi-author">
-        <div class="avatar">IR</div>
-        <div>
-          <div class="author-name">Inês Rodrigues</div>
-        </div>
-      </div>
-    </div>
-    <div class="testi-card">
-      <div class="stars">★★★★★</div>
-      <blockquote>"Gerimos mais de 200 colaboradores de campo em 3 cidades. A geolocalização do WorkTrace garante que sabemos sempre quem está onde."</blockquote>
-      <div class="testi-author">
-        <div class="avatar">CF</div>
-        <div>
-          <div class="author-name">Carlos Ferreira</div>
-        </div>
-      </div>
-    </div>
-    <div class="testi-card">
-      <div class="stars">★★★★★</div>
-      <blockquote>"A integração com o nosso sistema de salários foi perfeita. A equipa do WorkTrace foi incrivelmente prestável durante a configuração."</blockquote>
-      <div class="testi-author">
-        <div class="avatar">MS</div>
-        <div>
-          <div class="author-name">Miguel Santos</div>
-        </div>
-      </div>
-    </div>
-    <div class="testi-card">
-      <div class="stars">★★★★★</div>
-      <blockquote>"Experimentámos outras três ferramentas antes do WorkTrace. Nenhuma se aproxima em termos de fiabilidade e facilidade de uso."</blockquote>
-      <div class="testi-author">
-        <div class="avatar">JO</div>
-        <div>
-          <div class="author-name">João Oliveira</div>
         </div>
       </div>
     </div>
@@ -656,7 +604,7 @@
       <div class="plan-price">Grátis</div>
       <div class="plan-desc">Perfeito para pequenas equipas que estão a começar.</div>
       <ul class="plan-features">
-        <li>Até 10 colaboradores</li>
+        <li>Até 5 colaboradores</li>
         <li>Registo básico de presenças</li>
         <li>Check-in / check-out manual</li>
         <li>Emails de resumo semanal</li>
@@ -670,7 +618,7 @@
       <div class="plan-price">9,99€ <span> mês</span></div>
       <div class="plan-desc">Para equipas em crescimento que precisam de ferramentas avançadas.</div>
       <ul class="plan-features">
-        <li>Colaboradores ilimitados</li>
+        <li>Até 50 colaboradores</li>
         <li>Dashboards em tempo real</li>
         <li>Check-in por Qr code</li>
         <li>Alertas e notificações inteligentes</li>
@@ -685,7 +633,7 @@
       <div class="plan-price">19,99€</div>
       <div class="plan-desc">Soluções à medida para grandes organizações.</div>
       <ul class="plan-features">
-        <li>Tudo do plano Profissional</li>
+        <li>Colaboradores ilimitados</li>
         <li>Integração SSO / SAML</li>
         <li>Relatórios personalizados</li>
         <li>Gestor de conta dedicado</li>
@@ -701,7 +649,7 @@
   <div class="cta-box">
     <div class="section-label center">Começa Hoje</div>
     <h2>Pronto para ter controlo<br>sobre as presenças?</h2>
-    <p>Junta-te a milhares de equipas que já usam o WorkTrace.<br>Inicia o teu período de teste gratuito de 14 dias — sem cartão de crédito.</p>
+    <p>Junta-te a equipas que já usam o WorkTrace.<br>Inicia o teu período de teste gratuito de 14 dias — sem cartão de crédito.</p>
     <div class="cta-buttons">
       <a href="registo.html" class="btn-primary btn-large" style="text-decoration:none;">Escolher um Plano →</a>
       <a href="contacto.html" class="btn-outline" style="text-decoration:none;">Falar com Vendas</a>

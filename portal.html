@@ -18,29 +18,29 @@
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;overflow-x:hidden;}
   
+  /* Efeito visual de fundo */
   .orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;}
   .orb-1{width:500px;height:500px;background:rgba(108,71,255,0.15);top:-200px;left:-100px;}
   .orb-2{width:400px;height:400px;background:rgba(108,71,255,0.08);bottom:-150px;right:-100px;}
 
-  /* ── TOPBAR ── */
+  /* TOPBAR */
   .topbar{position:fixed;top:0;left:0;right:0;height:65px;background:rgba(10,10,15,0.8);backdrop-filter:blur(15px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:1000;}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;text-decoration:none;color:white;}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;text-decoration:none;color:white;cursor:pointer;}
   .brand-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;}
 
-  .menu-btn{background:var(--surface);border:1px solid var(--border);color:white;padding:8px;border-radius:8px;cursor:pointer;}
-  
-  /* ── SIDE MENU ── */
+  /* MENU HAMBURGUER */
+  .menu-btn{background:var(--surface);border:1px solid var(--border);color:white;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:18px;}
   .side-menu{position:fixed;top:0;right:-300px;width:300px;height:100%;background:var(--surface);border-left:1px solid var(--border);z-index:1100;transition:0.3s;padding:20px;display:flex;flex-direction:column;}
   .side-menu.active{right:0;}
   .menu-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;z-index:1050;}
   .menu-overlay.active{display:block;}
   
-  .menu-section-title{font-size:11px;color:var(--text-muted);font-weight:700;text-transform:uppercase;margin:20px 0 10px 10px;}
-  .menu-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;color:var(--text-dim);text-decoration:none;transition:0.2s;background:transparent;border:none;width:100%;text-align:left;cursor:pointer;font-size:14px;}
+  .menu-section-title{font-size:11px;color:var(--text-muted);font-weight:700;text-transform:uppercase;margin:20px 0 10px 10px;letter-spacing:1px;}
+  .menu-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;color:var(--text-dim);text-decoration:none;transition:0.2s;background:transparent;border:none;width:100%;text-align:left;cursor:pointer;font-size:14px;font-family:inherit;}
   .menu-item:hover{background:var(--surface2);color:white;}
-  .menu-item.logout{color:var(--danger);margin-top:auto;}
+  .menu-item.logout{color:var(--danger);margin-top:auto;font-weight:600;}
 
-  /* ── MAIN ── */
+  /* CONTEÚDO */
   .main{padding:100px 24px 40px;max-width:1200px;margin:0 auto;position:relative;z-index:1;}
   .tab-content{display:none;}
   .tab-content.active{display:block;}
@@ -49,15 +49,14 @@
   .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;}
   .stat-value{font-size:32px;font-weight:800;margin-top:8px;}
 
-  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px;}
-  .card-header{padding:20px 24px;border-bottom:1px solid var(--border);font-weight:700;}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:24px;}
+  .card-header{padding:20px 24px;border-bottom:1px solid var(--border);font-weight:700;display:flex;justify-content:space-between;align-items:center;}
   
   table{width:100%;border-collapse:collapse;}
   th{text-align:left;padding:12px 24px;font-size:11px;color:var(--text-muted);text-transform:uppercase;background:rgba(255,255,255,0.02);}
   td{padding:16px 24px;border-bottom:1px solid var(--border);font-size:14px;color:var(--text-dim);}
   
-  .badge{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;}
-  .badge-active{background:var(--accent-dim);color:var(--accent-light);}
+  .badge{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;background:var(--accent-dim);color:var(--accent-light);}
 </style>
 </head>
 <body>
@@ -65,18 +64,21 @@
 <div class="orb orb-1"></div><div class="orb orb-2"></div>
 
 <header class="topbar">
-  <a href="#" class="brand"> <div class="brand-icon">⏱</div> WorkTrace </a>
-  <button class="menu-btn" onclick="toggleMenu()"> ☰ </button>
+  <div class="brand" onclick="showTab('overview')">
+    <div class="brand-icon">⏱</div> WorkTrace
+  </div>
+  <button class="menu-btn" onclick="toggleMenu()">☰</button>
 </header>
 
 <div class="menu-overlay" id="menu-overlay" onclick="toggleMenu()"></div>
+
 <nav class="side-menu" id="side-menu">
-  <div class="menu-section-title">Administração</div>
+  <div class="menu-section-title">Gestão Interna</div>
   <button class="menu-item" onclick="showTab('overview')">📊 Visão Geral</button>
-  <button class="menu-item" onclick="showTab('registos')">🕒 Histórico</button>
-  <button class="menu-item" onclick="showTab('equipa')">👥 Equipa</button>
+  <button class="menu-item" onclick="showTab('registos')">🕒 Histórico de Horas</button>
+  <button class="menu-item" onclick="showTab('equipa')">👥 Gestão de Equipa</button>
   
-  <div class="menu-section-title">WorkTrace Site</div>
+  <div class="menu-section-title">WorkTrace Website</div>
   <a href="index.html#funcionalidades" class="menu-item">✨ Funcionalidades</a>
   <a href="index.html#estatisticas" class="menu-item">📈 Estatísticas</a>
   <a href="index.html#precos" class="menu-item">💰 Preços</a>
@@ -87,13 +89,20 @@
 <main class="main">
   <div id="tab-overview" class="tab-content active">
     <div class="stats-grid">
-      <div class="stat-card"> <div style="font-size:12px;color:var(--text-muted)">ATIVOS AGORA</div> <div class="stat-value" id="stat-ativos">0</div> </div>
-      <div class="stat-card"> <div style="font-size:12px;color:var(--text-muted)">TOTAL EQUIPA</div> <div class="stat-value" id="stat-equipa">0</div> </div>
+      <div class="stat-card">
+        <div style="font-size:12px;color:var(--text-muted);font-weight:700;">ATIVOS AGORA</div>
+        <div class="stat-value" id="stat-ativos">0</div>
+      </div>
+      <div class="stat-card">
+        <div style="font-size:12px;color:var(--text-muted);font-weight:700;">MEMBROS TOTAIS</div>
+        <div class="stat-value" id="stat-equipa">0</div>
+      </div>
     </div>
+
     <div class="card">
-      <div class="card-header">Registos Recentes</div>
+      <div class="card-header">Últimas Entradas</div>
       <table>
-        <thead><tr><th>Nome</th><th>Início</th><th>Estado</th></tr></thead>
+        <thead><tr><th>Colaborador</th><th>Hora Entrada</th><th>Estado</th></tr></thead>
         <tbody id="recent-table"></tbody>
       </table>
     </div>
@@ -101,9 +110,9 @@
 
   <div id="tab-registos" class="tab-content">
     <div class="card">
-      <div class="card-header">Histórico Completo</div>
+      <div class="card-header">Histórico de Registos</div>
       <table>
-        <thead><tr><th>Nome</th><th>Data</th><th>Estado</th></tr></thead>
+        <thead><tr><th>Nome</th><th>Data</th><th>Duração / Estado</th></tr></thead>
         <tbody id="registos-table-body"></tbody>
       </table>
     </div>
@@ -111,7 +120,7 @@
 
   <div id="tab-equipa" class="tab-content">
     <div class="card">
-      <div class="card-header">Membros da Empresa</div>
+      <div class="card-header">Membros Ativos</div>
       <table>
         <thead><tr><th>Nome</th><th>Cargo</th><th>Estado</th></tr></thead>
         <tbody id="equipa-table"></tbody>
@@ -133,10 +142,12 @@ function toggleMenu() {
 function showTab(name) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
+  
   if(name === 'equipa') loadEquipa();
   if(name === 'registos') loadFullRegistos();
   if(name === 'overview') loadOverview();
-  toggleMenu();
+  
+  if(document.getElementById('side-menu').classList.contains('active')) toggleMenu();
 }
 
 async function handleLogout() {
@@ -144,59 +155,63 @@ async function handleLogout() {
   window.location.href = 'index.html';
 }
 
-// ── FIX: Lógica de Dados ──
+// ── CARREGAMENTO DE DADOS (CORRIGIDO PARA A TUA BD) ──
 
 async function loadOverview() {
-  const { data: m } = await sb.from('empresa_membros').select('*', { count: 'exact' });
+  // Contagem de equipa
+  const { data: m } = await sb.from('empresa_membros').select('*');
   document.getElementById('stat-equipa').textContent = m?.length || 0;
 
+  // Ativos (sem end_time)
   const { data: ativos } = await sb.from('tempos').select('*').is('end_time', null);
   document.getElementById('stat-ativos').textContent = ativos?.length || 0;
 
-  const { data: tempos } = await sb.from('tempos').select('*, profiles(full_name)').limit(5).order('start_time', {ascending: false});
+  // Tabela recente - Corrigido para .name conforme tua imagem da BD
+  const { data: tempos } = await sb.from('tempos').select('*, profiles(name)').limit(5).order('start_time', {ascending: false});
   
   const tb = document.getElementById('recent-table');
   tb.innerHTML = tempos?.map(t => `
     <tr>
-      <td>${t.profiles?.full_name || 'Utilizador s/ nome'}</td>
-      <td>${new Date(t.start_time).toLocaleTimeString()}</td>
-      <td><span class="badge badge-active">Ativo</span></td>
+      <td>${t.profiles?.name || 'Utilizador'}</td>
+      <td>${new Date(t.start_time).toLocaleTimeString('pt-PT', {hour:'2-digit', minute:'2-digit'})}</td>
+      <td><span class="badge">Em Curso</span></td>
     </tr>
-  `).join('') || '<tr><td colspan="3">Sem registos</td></tr>';
+  `).join('') || '<tr><td colspan="3">Sem dados recentes</td></tr>';
 }
 
 async function loadEquipa() {
-  const { data: membros } = await sb.from('empresa_membros').select('*, profiles(full_name)');
+  const { data: membros } = await sb.from('empresa_membros').select('*, profiles(name)');
   const tb = document.getElementById('equipa-table');
   
   tb.innerHTML = membros?.map(m => `
     <tr>
-      <td>${m.profiles?.full_name || 'Utilizador s/ nome'}</td>
+      <td style="font-weight:600">${m.profiles?.name || 'Utilizador'}</td>
       <td>${m.cargo || 'Colaborador'}</td>
-      <td>${m.is_active ? 'Ativo' : 'Inativo'}</td>
+      <td><span style="color:var(--success)">● Ativo</span></td>
     </tr>
-  `).join('') || '<tr><td colspan="3">Sem membros</td></tr>';
+  `).join('') || '<tr><td colspan="3">Nenhum membro encontrado</td></tr>';
 }
 
 async function loadFullRegistos() {
-  const { data: registos } = await sb.from('tempos').select('*, profiles(full_name)').order('start_time', {ascending: false});
+  // Histórico - Corrigido para .name
+  const { data: registos } = await sb.from('tempos').select('*, profiles(name)').order('start_time', {ascending: false});
   const tb = document.getElementById('registos-table-body');
   
   if(!registos || registos.length === 0) {
-      tb.innerHTML = '<tr><td colspan="3">Nenhum histórico encontrado</td></tr>';
+      tb.innerHTML = '<tr><td colspan="3">Sem histórico disponível</td></tr>';
       return;
   }
 
   tb.innerHTML = registos.map(r => `
     <tr>
-      <td>${r.profiles?.full_name || 'Utilizador s/ nome'}</td>
-      <td>${new Date(r.start_time).toLocaleDateString()}</td>
-      <td>${r.end_time ? 'Concluído' : 'Em curso'}</td>
+      <td>${r.profiles?.name || 'Utilizador'}</td>
+      <td>${new Date(r.start_time).toLocaleDateString('pt-PT')}</td>
+      <td>${r.end_time ? 'Finalizado' : '<strong>A decorrer</strong>'}</td>
     </tr>
   `).join('');
 }
 
-// Iniciar
+// Inicia a aplicação
 loadOverview();
 </script>
 </body>

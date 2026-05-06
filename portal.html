@@ -32,53 +32,83 @@
   .login-card::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);}
   .login-title{font-size:24px;font-weight:700;margin-bottom:6px;letter-spacing:-0.5px;}
   .login-sub{color:var(--text-muted);font-size:14px;margin-bottom:32px;}
-
-  /* Badge de acesso restrito */
-  .access-badge{
-    display:inline-flex;align-items:center;gap:6px;
-    background:rgba(108,71,255,0.1);border:1px solid rgba(108,71,255,0.25);
-    border-radius:8px;padding:8px 12px;margin-bottom:24px;
-    font-size:12px;font-weight:600;color:var(--accent-light);width:100%;
-  }
+  .access-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(108,71,255,0.1);border:1px solid rgba(108,71,255,0.25);border-radius:8px;padding:8px 12px;margin-bottom:24px;font-size:12px;font-weight:600;color:var(--accent-light);width:100%;}
   .access-badge svg{width:14px;height:14px;stroke:var(--accent-light);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
-
   .field{margin-bottom:16px;}
   .field label{display:block;font-size:13px;font-weight:600;color:var(--text-dim);margin-bottom:8px;}
   .field input{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:13px 16px;color:var(--text);font-family:var(--font);font-size:15px;outline:none;transition:border-color .2s,box-shadow .2s;}
   .field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim);}
   .field input::placeholder{color:var(--text-muted);}
-
   .btn-primary{width:100%;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:14px;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:8px;box-shadow:0 4px 20px var(--accent-glow);position:relative;overflow:hidden;}
   .btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.1),transparent);pointer-events:none;}
   .btn-primary:hover{background:var(--accent-light);transform:translateY(-1px);box-shadow:0 8px 30px var(--accent-glow);}
   .btn-primary:active{transform:translateY(0);}
   .btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-
   .error-msg{background:rgba(255,77,109,0.1);border:1px solid rgba(255,77,109,0.25);border-radius:10px;padding:11px 14px;font-size:13px;color:var(--danger);margin-top:12px;display:none;align-items:center;gap:8px;}
   .error-msg svg{width:16px;height:16px;stroke:var(--danger);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
 
-  /* ── DASHBOARD ── */
+  /* ── TOPBAR ── */
   #dashboard-page{display:none;position:relative;z-index:1;}
-  .topbar{position:fixed;top:0;left:0;right:0;height:62px;background:rgba(10,10,15,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;z-index:200;gap:20px;}
-  .topbar-brand{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800;letter-spacing:-0.3px;flex-shrink:0;color:var(--text);}
-  .topbar-brand .brand-icon{width:30px;height:30px;font-size:15px;border-radius:7px;}
+  .topbar{position:fixed;top:0;left:0;right:0;height:62px;background:rgba(10,10,15,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;z-index:200;gap:16px;}
+  .topbar-brand{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800;letter-spacing:-0.3px;flex-shrink:0;color:var(--text);text-decoration:none;}
+  .topbar-brand .brand-icon{width:30px;height:30px;font-size:15px;border-radius:7px;background:var(--accent);display:flex;align-items:center;justify-content:center;box-shadow:0 0 12px var(--accent-glow);}
   .topbar-nav{display:flex;gap:2px;flex:1;}
   .nav-btn{display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text-muted);transition:all .15s;border:none;background:none;font-family:var(--font);}
   .nav-btn:hover{color:var(--text);background:var(--surface2);}
   .nav-btn.active{background:var(--accent-dim);color:var(--accent-light);font-weight:600;}
   .topbar-right{display:flex;align-items:center;gap:10px;margin-left:auto;flex-shrink:0;}
 
-  /* Chip de fundador */
-  .founder-chip{display:flex;align-items:center;gap:6px;padding:4px 10px 4px 6px;background:rgba(108,71,255,0.15);border:1px solid rgba(108,71,255,0.3);border-radius:40px;}
-  .founder-chip .f-dot{width:6px;height:6px;border-radius:50%;background:var(--accent-light);box-shadow:0 0 6px var(--accent-glow);}
+  /* Chip Fundador */
+  .founder-chip{display:flex;align-items:center;gap:6px;padding:4px 10px 4px 8px;background:rgba(108,71,255,0.15);border:1px solid rgba(108,71,255,0.3);border-radius:40px;}
+  .founder-chip .f-dot{width:6px;height:6px;border-radius:50%;background:var(--accent-light);box-shadow:0 0 6px var(--accent-glow);animation:blink 2s ease-in-out infinite;}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
   .founder-chip span{font-size:11px;font-weight:700;color:var(--accent-light);text-transform:uppercase;letter-spacing:.5px;}
 
-  .user-chip{display:flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;background:var(--surface);border:1px solid var(--border);border-radius:40px;}
+  /* Avatar */
+  .user-chip{display:flex;align-items:center;gap:8px;padding:4px 10px 4px 4px;background:var(--surface);border:1px solid var(--border);border-radius:40px;}
   .avatar{width:28px;height:28px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;box-shadow:0 0 10px var(--accent-glow);}
   .user-name-top{font-size:13px;font-weight:600;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .btn-logout{background:none;border:1px solid var(--border);color:var(--text-muted);cursor:pointer;font-size:12px;font-weight:600;padding:7px 12px;border-radius:8px;font-family:var(--font);transition:all .15s;}
-  .btn-logout:hover{color:var(--danger);border-color:rgba(255,77,109,0.3);background:rgba(255,77,109,0.08);}
 
+  /* ── HAMBURGUER ── */
+  .hamburger-wrap{position:relative;}
+  .hamburger-btn{
+    display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;
+    width:38px;height:38px;border-radius:9px;cursor:pointer;
+    background:var(--surface);border:1px solid var(--border);
+    transition:all .15s;flex-shrink:0;
+  }
+  .hamburger-btn:hover{border-color:var(--accent);background:var(--accent-dim);}
+  .hamburger-btn .bar{width:16px;height:1.5px;background:var(--text-dim);border-radius:2px;transition:all .2s;}
+  .hamburger-btn.open .bar:nth-child(1){transform:translateY(5.5px) rotate(45deg);background:var(--accent-light);}
+  .hamburger-btn.open .bar:nth-child(2){opacity:0;}
+  .hamburger-btn.open .bar:nth-child(3){transform:translateY(-5.5px) rotate(-45deg);background:var(--accent-light);}
+
+  .hamburger-menu{
+    position:absolute;top:calc(100% + 10px);right:0;
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:14px;padding:8px;min-width:200px;
+    box-shadow:0 16px 48px rgba(0,0,0,0.5),0 0 0 1px rgba(108,71,255,0.1);
+    display:none;z-index:300;
+  }
+  .hamburger-menu.open{display:block;animation:fadeIn .15s ease;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
+  .menu-section{padding:6px 10px 4px;font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.8px;}
+  .menu-divider{height:1px;background:var(--border);margin:6px 0;}
+
+  .menu-item{
+    display:flex;align-items:center;gap:10px;
+    padding:9px 12px;border-radius:8px;cursor:pointer;
+    font-size:13px;font-weight:500;color:var(--text-dim);
+    transition:all .15s;border:none;background:none;
+    font-family:var(--font);width:100%;text-align:left;text-decoration:none;
+  }
+  .menu-item:hover{background:var(--surface2);color:var(--text);}
+  .menu-item svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+  .menu-item.danger{color:var(--danger);}
+  .menu-item.danger:hover{background:rgba(255,77,109,0.1);color:var(--danger);}
+
+  /* ── MAIN ── */
   .main{padding:90px 32px 48px;max-width:1180px;margin:0 auto;}
   .tab-content{display:none;}
   .tab-content.active{display:block;}
@@ -86,6 +116,7 @@
   .page-title{font-size:28px;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px;}
   .page-subtitle{color:var(--text-muted);font-size:14px;}
 
+  /* Stats */
   .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
   .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;position:relative;overflow:hidden;transition:border-color .2s,transform .2s;}
   .stat-card:hover{border-color:rgba(108,71,255,0.35);transform:translateY(-2px);}
@@ -96,11 +127,13 @@
   .stat-sub{font-size:12px;color:var(--text-muted);margin-top:6px;}
   .stat-sub.up{color:var(--success);}
 
+  /* Card */
   .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:24px;}
   .card-header{padding:18px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
   .card-title{font-size:15px;font-weight:700;}
   .pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--accent-dim);color:var(--accent-light);border:1px solid rgba(108,71,255,0.2);}
 
+  /* Table */
   table{width:100%;border-collapse:collapse;}
   thead th{padding:11px 20px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);background:var(--bg2);border-bottom:1px solid var(--border);}
   tbody tr{border-bottom:1px solid rgba(30,30,53,0.8);transition:background .1s;}
@@ -110,6 +143,7 @@
   tbody td:first-child{color:var(--text);font-weight:600;}
   .mono{font-family:'Courier New',monospace;font-size:13px;}
 
+  /* Badges */
   .bs{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px;}
   .bs::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;}
   .bs-active{background:rgba(34,197,94,0.1);color:var(--success);}
@@ -118,6 +152,7 @@
   .bs-online{background:rgba(34,197,94,0.1);color:var(--success);}
   .bs-offline{background:rgba(107,107,138,0.1);color:var(--text-muted);}
 
+  /* Empty / Loading */
   .empty-state{padding:48px;text-align:center;color:var(--text-muted);}
   .empty-state .icon{font-size:36px;margin-bottom:12px;}
   .empty-state p{font-size:14px;}
@@ -125,6 +160,7 @@
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
   .loading{animation:pulse 1.4s ease-in-out infinite;}
 
+  /* Filters */
   .filter-bar{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center;}
   .filter-input{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:9px 14px;color:var(--text);font-family:var(--font);font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s;min-width:180px;}
   .filter-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim);}
@@ -133,6 +169,7 @@
   .btn-sm.accent{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 2px 12px var(--accent-glow);}
   .btn-sm.accent:hover{background:var(--accent-light);}
 
+  /* Charts */
   .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;}
   .chart-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;}
   .chart-title{font-size:14px;font-weight:700;margin-bottom:20px;}
@@ -145,11 +182,16 @@
   .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.2);border-top-color:#fff;border-radius:50%;animation:spin .65s linear infinite;display:inline-block;vertical-align:middle;margin-right:8px;}
   @keyframes spin{to{transform:rotate(360deg);}}
 
+  /* Equipa avatar */
+  .member-avatar{width:32px;height:32px;background:var(--accent-dim);border:1px solid rgba(108,71,255,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--accent-light);flex-shrink:0;}
+  .member-cell{display:flex;align-items:center;gap:10px;}
+
   @media(max-width:900px){
     .stats-grid{grid-template-columns:repeat(2,1fr);}
     .charts-grid{grid-template-columns:1fr;}
     .main{padding:80px 16px 32px;}
     .topbar-nav .nav-btn span:not(.icon){display:none;}
+    .founder-chip{display:none;}
   }
 </style>
 </head>
@@ -157,7 +199,7 @@
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 
-<!-- LOGIN -->
+<!-- ════════════════ LOGIN ════════════════ -->
 <div id="login-page">
   <div class="login-wrap">
     <div class="login-brand">
@@ -167,12 +209,10 @@
     <div class="login-card">
       <div class="login-title">Entrar na conta</div>
       <div class="login-sub">Portal de gestão — acesso restrito</div>
-
       <div class="access-badge">
         <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         Acesso exclusivo para fundadores
       </div>
-
       <div class="field">
         <label>Email</label>
         <input type="email" id="email" placeholder="nome@empresa.com" autocomplete="email">
@@ -182,7 +222,6 @@
         <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
       </div>
       <button class="btn-primary" id="login-btn" onclick="handleLogin()">Entrar →</button>
-
       <div class="error-msg" id="error-msg">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         <span id="error-text">Erro</span>
@@ -191,29 +230,85 @@
   </div>
 </div>
 
-<!-- DASHBOARD -->
+<!-- ════════════════ DASHBOARD ════════════════ -->
 <div id="dashboard-page">
   <header class="topbar">
-    <div class="topbar-brand">
+    <a href="index.html" class="topbar-brand">
       <div class="brand-icon">⏱</div>
       Work<span style="color:var(--accent-light)">Trace</span>
-    </div>
+    </a>
+
     <nav class="topbar-nav">
       <button class="nav-btn active" onclick="showTab('overview',this)"><span class="icon">◈</span> <span>Visão Geral</span></button>
       <button class="nav-btn" onclick="showTab('registos',this)"><span class="icon">◷</span> <span>Registos</span></button>
       <button class="nav-btn" onclick="showTab('relatorios',this)"><span class="icon">◫</span> <span>Relatórios</span></button>
       <button class="nav-btn" onclick="showTab('equipa',this)"><span class="icon">◉</span> <span>Equipa</span></button>
     </nav>
+
     <div class="topbar-right">
+      <!-- Chip Fundador -->
       <div class="founder-chip">
         <div class="f-dot"></div>
         <span>Fundador</span>
       </div>
+
+      <!-- Avatar + Nome -->
       <div class="user-chip">
         <div class="avatar" id="user-avatar">?</div>
         <span class="user-name-top" id="user-name">—</span>
       </div>
-      <button class="btn-logout" onclick="handleLogout()">Sair</button>
+
+      <!-- ☰ Hamburguer -->
+      <div class="hamburger-wrap">
+        <button class="hamburger-btn" id="hamburger-btn" onclick="toggleMenu()" aria-label="Menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+
+        <div class="hamburger-menu" id="hamburger-menu">
+          <div class="menu-section">Conta</div>
+          <div class="menu-item" style="cursor:default;opacity:.6;font-size:12px;padding:6px 12px;">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span id="menu-user-name">—</span>
+          </div>
+
+          <div class="menu-divider"></div>
+          <div class="menu-section">Portal</div>
+
+          <button class="menu-item" onclick="showTabFromMenu('overview')">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            Visão Geral
+          </button>
+          <button class="menu-item" onclick="showTabFromMenu('registos')">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            Registos
+          </button>
+          <button class="menu-item" onclick="showTabFromMenu('relatorios')">
+            <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+            Relatórios
+          </button>
+          <button class="menu-item" onclick="showTabFromMenu('equipa')">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Equipa
+          </button>
+          <button class="menu-item" onclick="exportCSV()">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Exportar CSV
+          </button>
+
+          <div class="menu-divider"></div>
+
+          <a href="index.html" class="menu-item">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Ir para o Site
+          </a>
+          <button class="menu-item danger" onclick="handleLogout()">
+            <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Sair
+          </button>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -229,7 +324,7 @@
         <div class="stat-card"><div class="stat-icon">⏱</div><div class="stat-label">Horas este mês</div><div class="stat-value" id="stat-horas">—</div><div class="stat-sub" id="stat-horas-sub">A carregar...</div></div>
         <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-label">Dias trabalhados</div><div class="stat-value" id="stat-dias">—</div><div class="stat-sub">Este mês</div></div>
         <div class="stat-card"><div class="stat-icon">🟢</div><div class="stat-label">Activos agora</div><div class="stat-value" id="stat-ativos">—</div><div class="stat-sub up">Em trabalho</div></div>
-        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-label">Total equipa</div><div class="stat-value" id="stat-equipa">—</div><div class="stat-sub">Registados</div></div>
+        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-label">Total equipa</div><div class="stat-value" id="stat-equipa">—</div><div class="stat-sub">Membros activos</div></div>
       </div>
       <div class="card">
         <div class="card-header"><span class="card-title">Últimos Registos</span><span class="pill" id="registos-count">0</span></div>
@@ -277,11 +372,11 @@
 
     <!-- EQUIPA -->
     <div id="tab-equipa" class="tab-content">
-      <div class="page-header"><div class="page-title">Equipa</div><div class="page-subtitle">Gestão de funcionários registados</div></div>
+      <div class="page-header"><div class="page-title">Equipa</div><div class="page-subtitle">Membros registados na empresa</div></div>
       <div class="card">
         <div class="card-header"><span class="card-title">Funcionários</span><span class="pill" id="equipa-count">—</span></div>
         <table>
-          <thead><tr><th>Nome</th><th>Email</th><th>Função</th><th>Último Acesso</th><th>Estado</th></tr></thead>
+          <thead><tr><th>Nome</th><th>Email</th><th>Cargo</th><th>Membro desde</th><th>Estado</th></tr></thead>
           <tbody id="equipa-table"><tr class="loading-row"><td colspan="5"><span class="loading">A carregar...</span></td></tr></tbody>
         </table>
       </div>
@@ -292,57 +387,67 @@
 
 <script>
 // ══════════════════════════════════════
-//  ⚙️  CONFIGURAÇÃO
-// ══════════════════════════════════════
 const SUPABASE_URL      = 'https://skvafimtkuwgktvlslcy.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNrdmFmaW10a3V3Z2t0dmxzbGN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1MTAzNjksImV4cCI6MjA2NDA4NjM2OX0.87ZO8EiVtISlQzilWoClF1EmpobSGfbvpIOkPfjF4-Q';
-const TABLE_PROFILES    = 'profiles';
-const TABLE_WORK_LOGS   = 'tempos';
 // ══════════════════════════════════════
 
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ══════════════════════════════════════
-//  🔐  AUTENTICAÇÃO COM VERIFICAÇÃO is_fundador
-// ══════════════════════════════════════
+// ── HAMBURGUER ──
+function toggleMenu() {
+  const btn  = document.getElementById('hamburger-btn');
+  const menu = document.getElementById('hamburger-menu');
+  btn.classList.toggle('open');
+  menu.classList.toggle('open');
+}
 
+// Fecha ao clicar fora
+document.addEventListener('click', e => {
+  const wrap = document.querySelector('.hamburger-wrap');
+  if (wrap && !wrap.contains(e.target)) {
+    document.getElementById('hamburger-btn')?.classList.remove('open');
+    document.getElementById('hamburger-menu')?.classList.remove('open');
+  }
+});
+
+function showTabFromMenu(name) {
+  const btn = document.querySelector(`.nav-btn[onclick*="${name}"]`);
+  if (btn) showTab(name, btn);
+  document.getElementById('hamburger-btn').classList.remove('open');
+  document.getElementById('hamburger-menu').classList.remove('open');
+}
+
+// ── AUTH ──
 async function handleLogin() {
   const email = document.getElementById('email').value.trim();
   const pass  = document.getElementById('password').value;
   const btn   = document.getElementById('login-btn');
-
   if (!email || !pass) { showErr('Preenche email e password.'); return; }
-
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>A verificar...';
   hideErr();
 
   try {
-    // 1. Autentica com Supabase Auth
+    // 1. Auth
     const { data: authData, error: authError } = await sb.auth.signInWithPassword({ email, password: pass });
     if (authError) throw new Error('Email ou password incorretos.');
 
-    const userId = authData.user.id;
-
-    // 2. Verifica se é fundador na tabela empresa_membros
-    const { data: membro, error: membroError } = await sb
+    // 2. Verifica is_fundador
+    const { data: membro } = await sb
       .from('empresa_membros')
       .select('is_fundador, is_active')
-      .eq('user_id', userId)
+      .eq('user_id', authData.user.id)
       .eq('is_fundador', true)
       .eq('is_active', true)
       .maybeSingle();
 
-    // 3. Se não for fundador → logout imediato + erro
-    if (membroError || !membro) {
+    if (!membro) {
       await sb.auth.signOut();
       throw new Error('Acesso negado. Este portal é exclusivo para fundadores.');
     }
 
-    // 4. É fundador e está ativo → entra no dashboard
     enterDashboard(authData.user);
-
   } catch(e) {
     showErr(e.message);
   } finally {
@@ -353,32 +458,41 @@ async function handleLogin() {
 
 async function handleLogout() {
   await sb.auth.signOut();
-  document.getElementById('dashboard-page').style.display = 'none';
-  document.getElementById('login-page').style.display = 'flex';
-  document.getElementById('email').value = '';
-  document.getElementById('password').value = '';
+  // Redireciona para página inicial
+  window.location.href = 'index.html';
 }
 
 function enterDashboard(user) {
   document.getElementById('login-page').style.display = 'none';
   document.getElementById('dashboard-page').style.display = 'block';
-  const name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'Fundador';
+
+  // Usa o full_name dos metadados, senão o primeiro segmento do email
+  const name = user.user_metadata?.full_name
+    || user.user_metadata?.name
+    || user.email?.split('@')[0]
+    || 'Fundador';
+
   document.getElementById('user-name').textContent = name;
   document.getElementById('user-avatar').textContent = name[0].toUpperCase();
+  document.getElementById('menu-user-name').textContent = name;
   document.getElementById('date-subtitle').textContent = new Date().toLocaleDateString('pt-PT', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
   loadOverview();
+  // Pré-carrega o nome real do perfil
+  loadUserName(user.id);
 }
 
-function showErr(msg) {
-  const el = document.getElementById('error-msg');
-  document.getElementById('error-text').textContent = msg;
-  el.style.display = 'flex';
+async function loadUserName(userId) {
+  const { data } = await sb.from('profiles').select('full_name').eq('id', userId).maybeSingle();
+  if (data?.full_name) {
+    document.getElementById('user-name').textContent = data.full_name;
+    document.getElementById('user-avatar').textContent = data.full_name[0].toUpperCase();
+    document.getElementById('menu-user-name').textContent = data.full_name;
+  }
 }
 
-function hideErr() {
-  document.getElementById('error-msg').style.display = 'none';
-}
-
+function showErr(msg) { document.getElementById('error-text').textContent = msg; document.getElementById('error-msg').style.display = 'flex'; }
+function hideErr() { document.getElementById('error-msg').style.display = 'none'; }
 document.getElementById('password').addEventListener('keydown', e => { if(e.key==='Enter') handleLogin(); });
 document.getElementById('email').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('password').focus(); });
 
@@ -396,12 +510,24 @@ function showTab(name, btn) {
 // ── OVERVIEW ──
 async function loadOverview() {
   const first = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
-  const { data } = await sb.from(TABLE_WORK_LOGS)
-    .select(`*, ${TABLE_PROFILES}(full_name, email)`)
+
+  // Busca registos com join para profiles
+  const { data: tempos } = await sb
+    .from('tempos')
+    .select('start_time, end_time, user_id')
     .gte('start_time', first)
     .order('start_time', { ascending: false })
-    .limit(50);
-  const rows = data || [];
+    .limit(100);
+
+  const rows = tempos || [];
+
+  // Busca nomes de profiles separadamente para evitar erros de join
+  const userIds = [...new Set(rows.map(r => r.user_id).filter(Boolean))];
+  let profilesMap = {};
+  if (userIds.length > 0) {
+    const { data: profs } = await sb.from('profiles').select('id, full_name, email').in('id', userIds);
+    (profs || []).forEach(p => { profilesMap[p.id] = p; });
+  }
 
   const ativos = rows.filter(r => r.start_time && !r.end_time).length;
   const done   = rows.filter(r => r.end_time);
@@ -419,33 +545,41 @@ async function loadOverview() {
 
   const tb = document.getElementById('recent-table');
   if (!rows.length) { tb.innerHTML = emptyRow(5, 'Sem registos este mês'); return; }
-  tb.innerHTML = rows.slice(0, 8).map(r => {
-    const nome = r[TABLE_PROFILES]?.full_name || r.user_id?.slice(0,8) || '—';
-    const estado = !r.end_time ? 'active' : 'done';
+  tb.innerHTML = rows.slice(0, 10).map(r => {
+    const p = profilesMap[r.user_id];
+    const nome = p?.full_name || r.user_id?.slice(0,8) + '...' || '—';
     return `<tr>
       <td>${nome}</td>
       <td class="mono">${fmt(r.start_time)}</td>
       <td class="mono">${r.end_time ? fmt(r.end_time) : '—'}</td>
       <td class="mono">${dur(r.start_time, r.end_time)}</td>
-      <td>${badge(estado)}</td>
+      <td>${r.end_time ? badge('done') : badge('active')}</td>
     </tr>`;
   }).join('');
 }
 
 // ── REGISTOS ──
 let allRows = [];
+let profilesCache = {};
+
 async function loadRegistos() {
   document.getElementById('registos-table').innerHTML = loadRow(6);
   const from = document.getElementById('date-from').value;
   const to   = document.getElementById('date-to').value;
-  let q = sb.from(TABLE_WORK_LOGS)
-    .select(`*, ${TABLE_PROFILES}(full_name, email)`)
-    .order('start_time', { ascending: false })
-    .limit(300);
+
+  let q = sb.from('tempos').select('start_time, end_time, user_id').order('start_time', { ascending: false }).limit(500);
   if (from) q = q.gte('start_time', from);
   if (to)   q = q.lte('start_time', to + 'T23:59:59');
   const { data } = await q;
   allRows = data || [];
+
+  // Carrega nomes
+  const ids = [...new Set(allRows.map(r => r.user_id).filter(Boolean))];
+  if (ids.length > 0) {
+    const { data: profs } = await sb.from('profiles').select('id, full_name, email').in('id', ids);
+    (profs || []).forEach(p => { profilesCache[p.id] = p; });
+  }
+
   renderRows(allRows);
 }
 
@@ -454,48 +588,56 @@ function renderRows(list) {
   const tb = document.getElementById('registos-table');
   if (!list.length) { tb.innerHTML = emptyRow(6, 'Sem registos encontrados'); return; }
   tb.innerHTML = list.map(r => {
-    const nome = r[TABLE_PROFILES]?.full_name || r.user_id?.slice(0,8) || '—';
-    const estado = !r.end_time ? 'active' : 'done';
+    const p = profilesCache[r.user_id];
+    const nome = p?.full_name || r.user_id?.slice(0,8) + '...' || '—';
     return `<tr>
       <td>${nome}</td>
       <td class="mono">${r.start_time?.slice(0,10) || '—'}</td>
       <td class="mono">${r.start_time ? hhmm(r.start_time) : '—'}</td>
       <td class="mono">${r.end_time ? hhmm(r.end_time) : '—'}</td>
       <td class="mono">${dur(r.start_time, r.end_time)}</td>
-      <td>${badge(estado)}</td>
+      <td>${r.end_time ? badge('done') : badge('active')}</td>
     </tr>`;
   }).join('');
 }
 
 function filterRegistos() {
   const q = document.getElementById('search-input').value.toLowerCase();
-  renderRows(allRows.filter(r => (r[TABLE_PROFILES]?.full_name || '').toLowerCase().includes(q)));
+  renderRows(allRows.filter(r => {
+    const nome = profilesCache[r.user_id]?.full_name || '';
+    return nome.toLowerCase().includes(q);
+  }));
 }
 
 // ── RELATÓRIOS ──
 async function loadRelatorios() {
   const first = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
-  const { data } = await sb.from(TABLE_WORK_LOGS)
-    .select(`*, ${TABLE_PROFILES}(full_name, email)`)
-    .gte('start_time', first);
-  const rows = data || [];
+  const { data: tempos } = await sb.from('tempos').select('start_time, end_time, user_id').gte('start_time', first);
+  const rows = tempos || [];
+
+  const ids = [...new Set(rows.map(r => r.user_id).filter(Boolean))];
+  if (ids.length > 0) {
+    const { data: profs } = await sb.from('profiles').select('id, full_name, email').in('id', ids);
+    (profs || []).forEach(p => { profilesCache[p.id] = p; });
+  }
 
   const byP = {};
   rows.forEach(r => {
-    const nome  = r[TABLE_PROFILES]?.full_name || r.user_id?.slice(0,8) || '—';
-    const email = r[TABLE_PROFILES]?.email || '—';
-    if (!byP[nome]) byP[nome] = { email, dias: new Set(), horas: 0 };
-    byP[nome].dias.add(r.start_time?.slice(0,10));
-    if (r.end_time) byP[nome].horas += (new Date(r.end_time) - new Date(r.start_time)) / 3600000;
+    const uid  = r.user_id;
+    const nome  = profilesCache[uid]?.full_name || uid?.slice(0,8) || '—';
+    const email = profilesCache[uid]?.email || '—';
+    if (!byP[uid]) byP[uid] = { nome, email, dias: new Set(), horas: 0 };
+    byP[uid].dias.add(r.start_time?.slice(0,10));
+    if (r.end_time) byP[uid].horas += (new Date(r.end_time) - new Date(r.start_time)) / 3600000;
   });
 
-  const entries = Object.entries(byP).sort((a,b) => b[1].horas - a[1].horas);
+  const entries = Object.values(byP).sort((a,b) => b.horas - a.horas);
   const tb = document.getElementById('relatorio-table');
-  tb.innerHTML = entries.length ? entries.map(([nome, d]) => {
+  tb.innerHTML = entries.length ? entries.map(d => {
     const dias = d.dias.size;
     const media = dias ? (d.horas / dias).toFixed(1) : '0.0';
     return `<tr>
-      <td>${nome}</td>
+      <td>${d.nome}</td>
       <td style="color:var(--text-muted);font-size:13px">${d.email}</td>
       <td class="mono">${dias}</td>
       <td class="mono">${d.horas.toFixed(1)}h</td>
@@ -522,51 +664,81 @@ function renderWeekChart(rows) {
 }
 
 function renderPersonChart(entries) {
-  const top = entries.slice(0,5), max = Math.max(...top.map(e=>e[1].horas), 1);
-  document.getElementById('chart-funcionarios').innerHTML = top.map(([nome,d]) =>
-    `<div class="bar-wrap"><div class="bar" style="height:${Math.round((d.horas/max)*80)+2}px" title="${d.horas.toFixed(1)}h"></div><span class="bar-label">${nome.split(' ')[0]}</span></div>`
+  const top = entries.slice(0,5), max = Math.max(...top.map(e=>e.horas), 1);
+  document.getElementById('chart-funcionarios').innerHTML = top.map(d =>
+    `<div class="bar-wrap"><div class="bar" style="height:${Math.round((d.horas/max)*80)+2}px" title="${d.horas.toFixed(1)}h"></div><span class="bar-label">${d.nome.split(' ')[0]}</span></div>`
   ).join('');
 }
 
-// ── EQUIPA ──
+// ── EQUIPA ── (query separada sem join para evitar erros RLS)
 async function loadEquipa() {
-  const { data: membros } = await sb
+  document.getElementById('equipa-table').innerHTML = loadRow(5);
+
+  // Busca membros
+  const { data: membros, error: mErr } = await sb
     .from('empresa_membros')
-    .select(`user_id, is_active, is_fundador, cargo, created_at, ${TABLE_PROFILES}(full_name, email)`)
-    .order('created_at', { ascending: false });
-  const list = membros || [];
-  document.getElementById('equipa-count').textContent = list.length + ' membros';
+    .select('user_id, is_active, is_fundador, cargo, created_at')
+    .order('created_at', { ascending: true });
+
+  if (mErr || !membros?.length) {
+    document.getElementById('equipa-count').textContent = '0 membros';
+    document.getElementById('equipa-table').innerHTML = emptyRow(5, 'Sem membros encontrados');
+    return;
+  }
+
+  // Busca perfis em separado
+  const ids = membros.map(m => m.user_id).filter(Boolean);
+  const { data: profs } = await sb.from('profiles').select('id, full_name, email').in('id', ids);
+  const pm = {};
+  (profs || []).forEach(p => { pm[p.id] = p; });
+
+  document.getElementById('equipa-count').textContent = membros.length + ' membros';
   const tb = document.getElementById('equipa-table');
-  tb.innerHTML = list.length ? list.map(m => {
-    const nome  = m[TABLE_PROFILES]?.full_name || '—';
-    const email = m[TABLE_PROFILES]?.email || '—';
-    const cargo = m.cargo || '—';
-    const criado = m.created_at ? new Date(m.created_at).toLocaleDateString('pt-PT') : '—';
-    const estadoTag = m.is_active
-      ? '<span class="bs bs-online">Activo</span>'
-      : '<span class="bs bs-offline">Inactivo</span>';
+
+  tb.innerHTML = membros.map(m => {
+    const p     = pm[m.user_id] || {};
+    const nome  = p.full_name || '—';
+    const email = p.email     || '—';
+    const cargo = m.cargo     || '—';
+    const desde = m.created_at ? new Date(m.created_at).toLocaleDateString('pt-PT') : '—';
+    const inicial = nome !== '—' ? nome[0].toUpperCase() : '?';
+
     return `<tr>
-      <td>${nome}${m.is_fundador ? ' <span style="font-size:10px;color:var(--accent-light);font-weight:700;background:var(--accent-dim);padding:1px 6px;border-radius:4px;vertical-align:middle">FUNDADOR</span>' : ''}</td>
+      <td>
+        <div class="member-cell">
+          <div class="member-avatar">${inicial}</div>
+          <div>
+            ${nome}
+            ${m.is_fundador ? '<span style="font-size:10px;color:var(--accent-light);font-weight:700;background:var(--accent-dim);padding:1px 7px;border-radius:4px;margin-left:6px;vertical-align:middle">FUNDADOR</span>' : ''}
+          </div>
+        </div>
+      </td>
       <td style="color:var(--text-muted);font-size:13px">${email}</td>
       <td style="color:var(--text-dim)">${cargo}</td>
-      <td class="mono" style="font-size:12px">${criado}</td>
-      <td>${estadoTag}</td>
+      <td class="mono" style="font-size:12px">${desde}</td>
+      <td>${m.is_active ? '<span class="bs bs-online">Activo</span>' : '<span class="bs bs-offline">Inactivo</span>'}</td>
     </tr>`;
-  }).join('') : emptyRow(5, 'Sem membros');
+  }).join('');
 }
 
 // ── CSV ──
 function exportCSV() {
-  if (!allRows.length) { alert('Sem dados para exportar.'); return; }
-  const rows = [['Nome','Data','Entrada','Saída','Horas','Estado']];
-  allRows.forEach(r => rows.push([
-    r[TABLE_PROFILES]?.full_name || '—',
-    r.start_time?.slice(0,10) || '',
-    r.start_time ? hhmm(r.start_time) : '',
-    r.end_time   ? hhmm(r.end_time)   : '',
-    dur(r.start_time, r.end_time),
-    r.end_time ? 'Concluído' : 'Em curso'
-  ]));
+  if (!allRows.length) {
+    alert('Vai primeiro a Registos para carregar os dados antes de exportar.');
+    return;
+  }
+  const rows = [['Nome','Email','Data','Entrada','Saída','Horas','Estado']];
+  allRows.forEach(r => {
+    const p = profilesCache[r.user_id] || {};
+    rows.push([
+      p.full_name || '—', p.email || '—',
+      r.start_time?.slice(0,10) || '',
+      r.start_time ? hhmm(r.start_time) : '',
+      r.end_time   ? hhmm(r.end_time)   : '',
+      dur(r.start_time, r.end_time),
+      r.end_time ? 'Concluído' : 'Em curso'
+    ]);
+  });
   const csv = rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n');
   const a = document.createElement('a');
   a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
@@ -575,33 +747,20 @@ function exportCSV() {
 }
 
 // ── UTILS ──
-function dur(s,e) { if(!s||!e) return '—'; const h=(new Date(e)-new Date(s))/3600000; return `${Math.floor(h)}h${String(Math.round((h%1)*60)).padStart(2,'0')}`; }
+function dur(s,e)  { if(!s||!e) return '—'; const h=(new Date(e)-new Date(s))/3600000; return `${Math.floor(h)}h${String(Math.round((h%1)*60)).padStart(2,'0')}`; }
 function fmt(iso)  { if(!iso) return '—'; return new Date(iso).toLocaleString('pt-PT',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}); }
 function hhmm(iso) { return new Date(iso).toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'}); }
-function badge(s)  { if(s==='active') return '<span class="bs bs-active">Em curso</span>'; return '<span class="bs bs-done">Concluído</span>'; }
-function emptyRow(cols,msg) { return `<tr><td colspan="${cols}"><div class="empty-state"><div class="icon">🔍</div><p>${msg}</p></div></td></tr>`; }
-function loadRow(cols)      { return `<tr class="loading-row"><td colspan="${cols}"><span class="loading">A carregar...</span></td></tr>`; }
+function badge(s)  { if(s==='active') return '<span class="bs bs-active">Em curso</span>'; if(s==='done') return '<span class="bs bs-done">Concluído</span>'; return '<span class="bs bs-absent">Ausente</span>'; }
+function emptyRow(c,m) { return `<tr><td colspan="${c}"><div class="empty-state"><div class="icon">🔍</div><p>${m}</p></div></td></tr>`; }
+function loadRow(c)    { return `<tr class="loading-row"><td colspan="${c}"><span class="loading">A carregar...</span></td></tr>`; }
 
 // ── AUTO LOGIN CHECK ──
-// Verifica também o is_fundador na sessão existente
 (async () => {
   try {
     const { data: { session } } = await sb.auth.getSession();
     if (!session?.user) return;
-
-    const { data: membro } = await sb
-      .from('empresa_membros')
-      .select('is_fundador, is_active')
-      .eq('user_id', session.user.id)
-      .eq('is_fundador', true)
-      .eq('is_active', true)
-      .maybeSingle();
-
-    if (!membro) {
-      await sb.auth.signOut();
-      return;
-    }
-
+    const { data: membro } = await sb.from('empresa_membros').select('is_fundador,is_active').eq('user_id', session.user.id).eq('is_fundador', true).eq('is_active', true).maybeSingle();
+    if (!membro) { await sb.auth.signOut(); return; }
     enterDashboard(session.user);
   } catch(e) {}
 })();

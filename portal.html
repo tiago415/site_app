@@ -382,8 +382,8 @@ async function iniciarDash(user) {
   show('pg-loading');
 
   // Buscar nome real do perfil (server-side via RLS)
-  const { data: perfil } = await sb.from('profiles').select('full_name, email').eq('id', user.id).maybeSingle();
-  const nome = perfil?.full_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'Fundador';
+  const { data: perfil } = await sb.from('profiles').select('name, email').eq('id', user.id).maybeSingle();
+  const nome = perfil?.name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'Fundador';
   setNome(nome);
 
   document.getElementById('dsub').textContent = new Date().toLocaleDateString('pt-PT',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
@@ -402,15 +402,16 @@ function setNome(n) {
 
 // ── PRÉ-CARREGAR PERFIS ──
 async function prefetchProfiles() {
-  const { data } = await sb.from('profiles').select('id, full_name, email').limit(200);
-  (data||[]).forEach(p => { pMap[p.id] = p; });
+  // Usa profiles_with_role que tem permissões para ver toda a empresa
+  const { data } = await sb.from('profiles_with_role').select('id, name, email').limit(200);
+  (data||[]).forEach(p => { pMap[p.id] = { full_name: p.name, email: p.email }; });
 }
 
 async function fetchMissingProfiles(ids) {
   const missing = ids.filter(id => id && !pMap[id]);
   if(!missing.length) return;
-  const { data } = await sb.from('profiles').select('id, full_name, email').in('id', missing);
-  (data||[]).forEach(p => { pMap[p.id] = p; });
+  const { data } = await sb.from('profiles_with_role').select('id, name, email').in('id', missing);
+  (data||[]).forEach(p => { pMap[p.id] = { full_name: p.name, email: p.email }; });
 }
 
 const pNome  = uid => pMap[uid]?.full_name || '—';
@@ -575,11 +576,11 @@ async function loadEq() {
   // Buscar membros e perfis em paralelo
   const [{ data: membros }, { data: profs }] = await Promise.all([
     sb.from('empresa_membros').select('user_id,is_active,is_fundador,cargo,created_at').order('created_at',{ascending:true}),
-    sb.from('profiles').select('id,full_name,email').limit(200)
+    sb.from('profiles_with_role').select('id, name, email').limit(200)
   ]);
 
   // Enriquecer cache de perfis
-  (profs||[]).forEach(p=>{ pMap[p.id]=p; });
+  (profs||[]).forEach(p=>{ pMap[p.id] = { full_name: p.name, email: p.email }; });
 
   if(!membros?.length) {
     document.getElementById('ec').textContent='0 membros';

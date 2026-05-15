@@ -382,8 +382,8 @@ async function iniciarDash(user) {
   show('pg-loading');
 
   // Buscar nome real do perfil (server-side via RLS)
-  const { data: perfil } = await sb.from('profiles').select('name, email').eq('id', user.id).maybeSingle();
-  const nome = perfil?.name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'Fundador';
+  const { data: perfil } = await sb.from('profiles').select('id, name, email').eq('id', user.id).maybeSingle();
+  const nome = perfil?.name || user.user_metadata?.name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'Fundador';
   setNome(nome);
 
   document.getElementById('dsub').textContent = new Date().toLocaleDateString('pt-PT',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
@@ -403,15 +403,15 @@ function setNome(n) {
 // ── PRÉ-CARREGAR PERFIS ──
 async function prefetchProfiles() {
   // Usa profiles_with_role que tem permissões para ver toda a empresa
-  const { data } = await sb.from('profiles_with_role').select('id, name, email').limit(200);
-  (data||[]).forEach(p => { pMap[p.id] = { full_name: p.name, email: p.email }; });
+  const { data } = await sb.from('profiles').select('id, name, email').limit(200);
+  (data||[]).forEach(p => { pMap[p.id] = { full_name: p.name || (p.email||'').split('@')[0] || '-', email: p.email || '-' }; });
 }
 
 async function fetchMissingProfiles(ids) {
   const missing = ids.filter(id => id && !pMap[id]);
   if(!missing.length) return;
-  const { data } = await sb.from('profiles_with_role').select('id, name, email').in('id', missing);
-  (data||[]).forEach(p => { pMap[p.id] = { full_name: p.name, email: p.email }; });
+  const { data } = await sb.from('profiles').select('id, name, email').in('id', missing);
+  (data||[]).forEach(p => { pMap[p.id] = { full_name: p.name || (p.email||'').split('@')[0] || '-', email: p.email || '-' }; });
 }
 
 const pNome  = uid => pMap[uid]?.full_name || '—';
@@ -569,23 +569,27 @@ async function loadRel() {
 }
 
 // ── EQUIPA ──
-// Query separada (evita problemas de RLS em joins) — tudo via servidor
 async function loadEq() {
   document.getElementById('etb').innerHTML=ldR(5);
 
-  // Buscar membros e perfis em paralelo
-  const [{ data: membros }, { data: profs }] = await Promise.all([
-    sb.from('empresa_membros').select('user_id,is_active,is_fundador,cargo,created_at').order('created_at',{ascending:true}),
-    sb.from('profiles_with_role').select('id, name, email').limit(200)
-  ]);
-
-  // Enriquecer cache de perfis
-  (profs||[]).forEach(p=>{ pMap[p.id] = { full_name: p.name, email: p.email }; });
+  // Busca membros da empresa
+  const { data: membros } = await sb
+    .from('empresa_membros')
+    .select('user_id, is_active, is_fundador, cargo, created_at')
+    .order('created_at', {ascending: true});
 
   if(!membros?.length) {
     document.getElementById('ec').textContent='0 membros';
     document.getElementById('etb').innerHTML=emR(5,'Sem membros encontrados');
     return;
+  }
+
+  // Busca perfis — tenta cada user_id individualmente para contornar RLS
+  for(const m of membros) {
+    if(!pMap[m.user_id]) {
+      const { data: p } = await sb.from('profiles').select('id, name, email').eq('id', m.user_id).maybeSingle();
+      if(p) pMap[p.id] = { full_name: p.name || (p.email||'').split('@')[0] || '-', email: p.email || '-' };
+    }
   }
 
   document.getElementById('ec').textContent=membros.length+' membros';

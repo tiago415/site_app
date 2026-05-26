@@ -102,7 +102,7 @@
   /* STATS */
   .sg{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
   .sc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px 24px;position:relative;overflow:hidden;transition:border-color .2s,transform .2s;}
-  .sc:hover{border-color:rgba(108,71,255,0.35);transform:translateY(-2px);}
+  .sc:hover{border-color:rgba(108,71,255,0.35);transform:translateY(-2px);}.sc-click{cursor:pointer;}.sc-click:hover{border-color:rgba(108,71,255,0.5);box-shadow:0 0 16px var(--accent-glow);}
   .sc::after{content:'';position:absolute;top:0;right:0;width:100px;height:100px;background:radial-gradient(circle,var(--accent-dim),transparent 70%);border-radius:50%;transform:translate(30px,-30px);}
   .sico{font-size:18px;margin-bottom:14px;width:40px;height:40px;background:var(--accent-dim);border:1px solid rgba(108,71,255,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;}
   .slb{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;}
@@ -258,8 +258,8 @@
       <div class="sg">
         <div class="sc"><div class="sico">⏱</div><div class="slb">Horas este mês</div><div class="svl" id="s-h">—</div><div class="ssb" id="s-hs">A carregar...</div></div>
         <div class="sc"><div class="sico">📅</div><div class="slb">Dias trabalhados</div><div class="svl" id="s-d">—</div><div class="ssb">Este mês</div></div>
-        <div class="sc"><div class="sico">🟢</div><div class="slb">Activos agora</div><div class="svl" id="s-a">—</div><div class="ssb up">Em trabalho</div></div>
-        <div class="sc"><div class="sico">👥</div><div class="slb">Total equipa</div><div class="svl" id="s-e">—</div><div class="ssb">Membros activos</div></div>
+        <div class="sc sc-click" onclick="goTabAtivos()" title="Ver activos nos Registos"><div class="sico">🟢</div><div class="slb">Activos agora</div><div class="svl" id="s-a">—</div><div class="ssb up">Em trabalho ↗</div></div>
+        <div class="sc sc-click" onclick="goTabM('equipa')" title="Ver equipa"><div class="sico">👥</div><div class="slb">Total equipa</div><div class="svl" id="s-e">—</div><div class="ssb">Ver equipa ↗</div></div>
       </div>
       <div class="card">
         <div class="ch"><span class="ct">Últimos Registos</span><span class="pill" id="rc">0</span></div>
@@ -291,7 +291,10 @@
 
     <!-- RELATÓRIOS -->
     <div id="tab-relatorios" class="tab">
-      <div class="ph"><div class="pt">Relatórios</div><div class="ps">Análise de produtividade — dados em tempo real da BD</div></div>
+      <div class="ph"><div class="pt">Relatórios</div><div class="ps">Análise de produtividade — via Edge Function</div></div>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+        <button class="bsm acc" onclick="doExportRelatorio()">⬇ Exportar Relatório CSV</button>
+      </div>
       <div class="card">
         <div class="ch"><span class="ct">Resumo por Funcionário — Este Mês</span></div>
         <table><thead><tr><th>Funcionário</th><th>Email</th><th>Dias</th><th>Total Horas</th><th>Média Diária</th><th>Faltas</th></tr></thead>
@@ -332,7 +335,7 @@ function tHB()  { document.getElementById('hbtn').classList.toggle('on'); docume
 function cHB()  { document.getElementById('hbtn').classList.remove('on'); document.getElementById('hmenu').classList.remove('on'); }
 document.addEventListener('click', e => { const w=document.querySelector('.hw'); if(w&&!w.contains(e.target)) cHB(); });
 
-function goTabM(n) { const b=document.querySelector(`.nb[onclick*="'${n}'"]`); if(b) goTab(n,b); cHB(); }
+function goTabM(n) { const b = document.querySelector('[onclick*="' + n + '"]'); if(b) goTab(n,b); cHB(); }
 
 // ── LOGIN ──
 async function doLogin() {
@@ -423,7 +426,7 @@ function goTab(name, btn) {
   document.querySelectorAll('.nb').forEach(n => n.classList.remove('on'));
   document.getElementById('tab-'+name).classList.add('on');
   btn.classList.add('on');
-  if(name==='registos')   loadR();
+  if(name==='registos')   { document.getElementById('dfr').value=''; document.getElementById('dto').value=''; loadR(); }
   if(name==='relatorios') loadRel();
   if(name==='equipa')     loadEq();
 }
@@ -500,13 +503,21 @@ async function loadR() {
   document.getElementById('regtb').innerHTML=ldR(6);
   const from=document.getElementById('dfr').value;
   const to  =document.getElementById('dto').value;
+  // Sem filtro de datas por defeito — carrega sempre todos
   let q=sb.from('tempos').select('id,start_time,end_time,user_id').order('start_time',{ascending:false}).limit(500);
-  if(from) q=q.gte('start_time',from);
+  if(from) q=q.gte('start_time',from+'T00:00:00');
   if(to)   q=q.lte('start_time',to+'T23:59:59');
-  const { data } = await q;
+  const { data, error } = await q;
+  if(error) console.error('Tempos error:', error);
   allR = data||[];
   await fetchMissingProfiles([...new Set(allR.map(r=>r.user_id).filter(Boolean))]);
   renderR(allR);
+}
+
+// Vai para Registos e filtra só os activos (sem end_time)
+function goTabAtivos() {
+  const btn = document.querySelector('.nb[onclick*="registos"]');
+  if(btn) goTab('registos', btn);
 }
 
 function renderR(list) {
@@ -528,33 +539,95 @@ function filterR() {
   renderR(allR.filter(r=>pNome(r.user_id).toLowerCase().includes(q)));
 }
 
-// ── RELATÓRIOS ──
+// ── RELATÓRIOS via Edge Function ──
 async function loadRel() {
-  const first=new Date(new Date().getFullYear(),new Date().getMonth(),1).toISOString();
+  const tb = document.getElementById('reltb');
+  tb.innerHTML = ldR(6);
 
-  // Busca em paralelo: tempos + faltas do mês (ambos via RLS server-side)
+  try {
+    // Chama a Edge Function export_relatorio_empresa_csv
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch(
+      `${SURL}/functions/v1/export_relatorio_empresa_csv`,
+      {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    if(!resp.ok) throw new Error(`Erro ${resp.status}`);
+
+    const text = await resp.text();
+
+    // Tenta parsear como JSON primeiro
+    let rows = [];
+    try {
+      rows = JSON.parse(text);
+    } catch(e) {
+      // Se for CSV, converte para tabela
+      const lines = text.trim().split('\n');
+      if(lines.length > 1) {
+        const headers = lines[0].split(',').map(h => h.replace(/"/g,'').trim());
+        rows = lines.slice(1).map(line => {
+          const vals = line.split(',').map(v => v.replace(/"/g,'').trim());
+          const obj = {};
+          headers.forEach((h,i) => { obj[h] = vals[i] || ''; });
+          return obj;
+        });
+      }
+    }
+
+    if(!rows.length) { tb.innerHTML = emR(6,'Sem dados este mês'); return; }
+
+    // Renderiza — tenta detetar as colunas automaticamente
+    const first = rows[0];
+    const keys = Object.keys(first);
+    // Colunas esperadas da Edge Function (ajusta se necessário)
+    const nomeKey   = keys.find(k => /nome|name/i.test(k)) || keys[0];
+    const emailKey  = keys.find(k => /email/i.test(k));
+    const diasKey   = keys.find(k => /dias/i.test(k));
+    const horasKey  = keys.find(k => /horas|total/i.test(k));
+    const mediaKey  = keys.find(k => /media|média/i.test(k));
+    const faltasKey = keys.find(k => /falt/i.test(k));
+
+    tb.innerHTML = rows.map(r => `<tr>
+      <td>${r[nomeKey]||'—'}</td>
+      <td style="color:var(--muted);font-size:13px">${emailKey?r[emailKey]:'—'}</td>
+      <td class="mono">${diasKey?r[diasKey]:'—'}</td>
+      <td class="mono" style="color:var(--accent-light);font-weight:600">${horasKey?r[horasKey]:'—'}</td>
+      <td class="mono">${mediaKey?r[mediaKey]:'—'}</td>
+      <td class="mono" style="color:${faltasKey&&r[faltasKey]>0?'var(--danger)':'var(--muted)'}">${faltasKey?r[faltasKey]:'0'}</td>
+    </tr>`).join('');
+
+  } catch(err) {
+    console.error('Edge Function error:', err);
+    // Fallback: calcula directamente da BD
+    await loadRelFallback();
+  }
+}
+
+// Fallback caso a Edge Function falhe
+async function loadRelFallback() {
+  const tb = document.getElementById('reltb');
+  const first=new Date(new Date().getFullYear(),new Date().getMonth(),1).toISOString();
   const [{ data: tempos }, { data: faltas }] = await Promise.all([
     sb.from('tempos').select('start_time,end_time,user_id').gte('start_time',first),
     sb.from('faltas').select('user_id,data').gte('data',first.slice(0,10))
   ]);
-
   const rows=tempos||[];
   await fetchMissingProfiles([...new Set(rows.map(r=>r.user_id).filter(Boolean))]);
-
-  // Mapa de faltas por utilizador
   const fmap={};
   (faltas||[]).forEach(f=>{ fmap[f.user_id]=(fmap[f.user_id]||0)+1; });
-
-  // Agregar por utilizador
   const bu={};
   rows.forEach(r=>{
     if(!bu[r.user_id]) bu[r.user_id]={dias:new Set(),horas:0};
     bu[r.user_id].dias.add(r.start_time?.slice(0,10));
     if(r.end_time) bu[r.user_id].horas+=(new Date(r.end_time)-new Date(r.start_time))/3600000;
   });
-
   const entries=Object.entries(bu).sort((a,b)=>b[1].horas-a[1].horas);
-  const tb=document.getElementById('reltb');
   tb.innerHTML=entries.length?entries.map(([uid,d])=>{
     const dias=d.dias.size, media=dias?(d.horas/dias).toFixed(1):'0.0';
     return `<tr>
@@ -605,6 +678,28 @@ async function loadEq() {
       <td>${m.is_active?'<span class="bs bson">Activo</span>':'<span class="bs bsof">Inactivo</span>'}</td>
     </tr>`;
   }).join('');
+}
+
+
+// ── EXPORTAR RELATÓRIO via Edge Function ──
+async function doExportRelatorio() {
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch(
+      `${SURL}/functions/v1/export_relatorio_empresa_csv`,
+      { method: 'GET', headers: { 'Authorization': `Bearer ${session.access_token}` } }
+    );
+    if(!resp.ok) throw new Error(`Erro ${resp.status}`);
+    const blob = await resp.blob();
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = `relatorio_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  } catch(err) {
+    alert('Erro ao exportar: ' + err.message);
+  }
 }
 
 // ── EXPORTAR CSV ──
